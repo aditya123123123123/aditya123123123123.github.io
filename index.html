@@ -3,80 +3,2791 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aditya Jhalani - Portfolio</title>
+    <title>Portfolio</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
-        section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 4rem 2rem; }
-        .container { max-width: 800px; width: 100%; }
-        h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 300; margin-bottom: 1rem; }
-        h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 300; margin-bottom: 1rem; }
-        .tagline { font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: #888; margin-bottom: 2rem; }
-        .bio { font-size: 1.1rem; line-height: 1.8; color: #ccc; max-width: 600px; margin-bottom: 2rem; }
-        .achievement, .post { margin-bottom: 3rem; cursor: pointer; transition: transform 0.3s; }
-        .achievement:hover, .post:hover { transform: translateX(10px); }
-        .achievement h3, .post h3 { font-size: 1.5rem; font-weight: 400; margin-bottom: 0.5rem; }
-        .post h3 { font-size: 2rem; font-weight: 300; }
-        .achievement p, .post p { color: #aaa; line-height: 1.6; }
-        .post .date { color: #666; font-size: 0.9rem; margin-bottom: 1rem; }
-        .footer { text-align: center; padding: 3rem 2rem; color: #444; font-size: 0.85rem; }
-        @media (max-width: 768px) { .achievement:hover, .post:hover { transform: none; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transition: transform 0.1s;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transition: transform 0.3s;
+            z-index: 9998;
+            mix-blend-mode: difference;
+        }
+
+        /* Canvas */
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.9), transparent);
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .nav-bar.visible {
+            opacity: 1;
+        }
+
+        .back-button {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Content */
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1, h2 {
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+        }
+
+        .tagline {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: #888;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.7s;
+        }
+
+        .bio {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.9s;
+        }
+
+        .achievement {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .achievement:hover {
+            transform: translateX(10px);
+        }
+
+        .achievement.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .achievement h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .achievement:hover h3 {
+            color: #ddd;
+        }
+
+        .achievement p {
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .post {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .post:hover {
+            transform: translateX(10px);
+        }
+
+        .post.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .post h3 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .post:hover h3 {
+            color: #ddd;
+        }
+
+        .post .date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content {
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        /* Detail Pages */
+        .detail-page {
+            display: none;
+            min-height: 100vh;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .detail-page.active {
+            display: block;
+        }
+
+        .detail-content {
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        .detail-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 2rem;
+            animation-delay: 0.3s;
+        }
+
+        .detail-content .detail-meta {
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .detail-content .detail-body {
+            line-height: 1.8;
+            font-size: 1.2rem;
+            color: #ddd;
+        }
+
+        .detail-content .detail-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-content .detail-body img {
+            max-width: 100%;
+            height: auto;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        /* Footer with Admin */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #444;
+            font-size: 0.85rem;
+            position: relative;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .admin-button {
+            background: none;
+            border: none;
+            color: #444;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .admin-button:hover {
+            color: #888;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-box {
+            background: #111;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #333;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-box h3 {
+            margin-bottom: 1.5rem;
+            color: #fff;
+            font-weight: 300;
+            font-size: 1.5rem;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .login-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .login-buttons button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .login-buttons .cancel {
+            background: #333;
+            color: #fff;
+        }
+
+        .login-buttons .cancel:hover {
+            background: #444;
+        }
+
+        .login-buttons .login {
+            background: #0066cc;
+            color: #fff;
+        }
+
+        .login-buttons .login:hover {
+            background: #0052a3;
+        }
+
+        /* Admin Panel - Improved Styles */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 20000;
+            overflow-y: auto;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-header {
+            background: #111;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h2 {
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .admin-nav button {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .admin-nav button:hover,
+        .admin-nav button.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #666;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .edit-group {
+            background: #111;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #333;
+            margin-bottom: 2rem;
+        }
+
+        .edit-group h3 {
+            margin-bottom: 1rem;
+            color: #fff;
+            font-weight: 300;
+            font-size: 1.3rem;
+        }
+
+        .edit-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .edit-field label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .edit-field input,
+        .edit-field textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .edit-field textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .edit-field input:focus,
+        .edit-field textarea:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .edit-field label input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+            transform: scale(1.2);
+        }
+
+        /* Rich Editor Styles */
+        .editor-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .editor-button {
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .editor-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #666;
+        }
+
+        .editor-button.active {
+            background: #0066cc;
+            border-color: #0066cc;
+        }
+
+        .editor-content {
+            width: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.6;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .editor-content:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .editor-content h1 {
+            font-size: 2.5rem;
+            margin: 1rem 0;
+            font-weight: 300;
+        }
+
+        .editor-content h2 {
+            font-size: 2rem;
+            margin: 1rem 0;
+            font-weight: 300;
+        }
+
+        .editor-content h3 {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            font-weight: 400;
+        }
+
+        .editor-content p {
+            margin-bottom: 1rem;
+        }
+
+        .editor-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .editor-content ul, .editor-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .editor-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .editor-content blockquote {
+            border-left: 3px solid #666;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #aaa;
+            font-style: italic;
+        }
+
+        /* Image Upload */
+        .image-upload-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        .image-upload-input {
+            display: none;
+        }
+
+        .image-upload-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .image-upload-label:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #666;
+        }
+
+        /* Preview */
+        .preview-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+        }
+
+        .preview-label {
+            display: block;
+            margin-bottom: 1rem;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .preview-content {
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid #222;
+        }
+
+        .preview-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .preview-content .detail-meta {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .preview-content p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: #ddd;
+        }
+
+        .preview-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .save-button {
+            background: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .save-button:hover {
+            background: #0052a3;
+        }
+
+        .delete-button {
+            background: #aa0000;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .delete-button:hover {
+            background: #880000;
+        }
+
+        .add-new-button {
+            background: #00aa00;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
+        }
+
+        .add-new-button:hover {
+            background: #008800;
+        }
+
+        /* Image Gallery in Editor */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid #222;
+        }
+
+        .image-gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .image-gallery-item:hover {
+            border-color: #0066cc;
+        }
+
+        .image-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-gallery-item .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(170, 0, 0, 0.9);
+            color: #fff;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .image-gallery-item:hover .remove-image {
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #111;
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #333;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 30000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            border-color: #00aa00;
+        }
+
+        .toast.error {
+            border-color: #aa0000;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cursor, .cursor-follower {
+                display: none;
+            }
+            
+            body {
+                cursor: auto;
+            }
+
+            .achievement:hover,
+            .post:hover {
+                transform: none;
+            }
+
+            .admin-nav {
+                flex-wrap: wrap;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .editor-toolbar {
+                gap: 0.25rem;
+            }
+
+            .editor-button {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
     </style>
 </head>
 <body>
-    <section>
-        <div class="container">
-            <h1>hey, i'm aditya</h1>
-            <p class="tagline">student, musician, and ai enthusiast :)</p>
-            <p class="bio">I'm a high school student at Trinity School with a passion for AI, music, and technology. Currently exploring machine learning, programming, and the future of artificial intelligence while maintaining a 4.0 GPA and leading jazz performances.</p>
-        </div>
-    </section>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-text">Loading...</div>
+    </div>
 
-    <section>
-        <div class="container">
-            <h2>achievements</h2>
-            <div class="achievement">
-                <h3>Lead Alto Saxophonist & Gold Medalist</h3>
-                <p>Lead Alto Saxophonist for Trinity School Jazz Band with 6+ years of experience. Gold Medalist at WorldStrides Competition, performing at inter-school competitions and weekly jazz club sessions.</p>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar" id="nav-bar">
+        <button class="back-button" onclick="navigateToHome()">← Back to Home</button>
+    </nav>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Three.js Canvas -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Content -->
+    <div class="content" id="main-content">
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="container">
+                <h1 id="hero-name">hey, i'm aditya</h1>
+                <p class="tagline" id="hero-tagline">student, musician, and ai enthusiast :)</p>
+                <p class="bio" id="hero-bio">
+                    I'm a high school student at Trinity School with a passion for AI, music, and technology. 
+                    Currently exploring machine learning, programming, and the future of artificial intelligence 
+                    while maintaining a 4.0 GPA and leading jazz performances.
+                </p>
             </div>
-            <div class="achievement">
-                <h3>Honor Council Board Member</h3>
-                <p>Elected to Trinity School's selective Honor Council Board (8 students chosen by student body), serving on the School Disciplinary Council to uphold academic honesty and ensure restorative justice.</p>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements">
+            <div class="container">
+                <h2>achievements</h2>
+                <div id="achievements-container">
+                    <!-- Achievements will be dynamically loaded here -->
+                </div>
             </div>
-            <div class="achievement">
-                <h3>Multi-Instrumentalist & Academic Excellence</h3>
-                <p>Maintaining a 4.0 unweighted GPA while mastering multiple instruments: 12+ years piano, 6+ years saxophone, 2 years violin, and 1 year flute. Active in basketball, environmental advocacy, and financial literacy.</p>
+        </section>
+
+        <!-- AI/LLM Thoughts Section -->
+        <section id="thoughts">
+            <div class="container">
+                <h2>thoughts on ai & the future</h2>
+                <div id="posts-container">
+                    <!-- Posts will be dynamically loaded here -->
+                </div>
             </div>
-            <div class="achievement">
-                <h3>AI & Programming Enthusiast</h3>
-                <p>Proficient in Python, CSS, HTML, and Java. Experienced with AI models including ChatGPT, Gemini, ElevenLabs, and Claude. Completed Advanced Macroeconomics at Johns Hopkins CTY summer program.</p>
+        </section>
+
+        <!-- Footer with Admin -->
+        <footer class="footer">
+            <div class="footer-content">
+                <span>© 2025 Aditya Jhalani</span>
+                <span>•</span>
+                <button class="admin-button" onclick="showLoginModal()">Admin</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Detail Pages Container -->
+    <div id="detail-pages">
+        <!-- Detail pages will be dynamically created -->
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="login-modal">
+        <div class="login-box">
+            <h3>Admin Login</h3>
+            <input type="password" id="admin-password" placeholder="Enter password" onkeypress="if(event.key==='Enter') attemptLogin()">
+            <div class="login-buttons">
+                <button class="cancel" onclick="hideLoginModal()">Cancel</button>
+                <button class="login" onclick="attemptLogin()">Login</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section>
-        <div class="container">
-            <h2>thoughts on ai & the future</h2>
-            <div class="post">
-                <h3>AI in Education: A Student's Perspective</h3>
-                <p class="date">January 2025</p>
-                <p>As a high school student working with AI models like Claude, ChatGPT, and Gemini, I'm fascinated by how these tools are reshaping learning...</p>
-            </div>
-            <div class="post">
-                <h3>The Intersection of Music and Machine Learning</h3>
-                <p class="date">December 2024</p>
-                <p>Playing jazz for over 6 years has taught me about improvisation, pattern recognition, and creative expression—skills surprisingly relevant to AI development...</p>
-            </div>
-            <div class="post">
-                <h3>Building Tomorrow: Teen Perspective on AI Ethics</h3>
-                <p class="date">November 2024</p>
-                <p>As someone who will inherit the world these AI systems are building, I think about the ethical implications constantly...</p>
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-header">
+            <h2>Admin Dashboard</h2>
+            <div class="admin-nav">
+                <button class="active" onclick="switchAdminTab('profile')">Profile</button>
+                <button onclick="switchAdminTab('achievements')">Achievements</button>
+                <button onclick="switchAdminTab('posts')">Blog Posts</button>
+                <button onclick="switchAdminTab('settings')">Settings</button>
+                <button onclick="exitAdmin()">Exit Admin</button>
             </div>
         </div>
-    </section>
+        
+        <div class="admin-content">
+            <!-- Profile Section -->
+            <div class="admin-section active" id="admin-profile">
+                <div class="edit-group">
+                    <h3>Hero Section</h3>
+                    <div class="edit-field">
+                        <label>Name</label>
+                        <input type="text" id="edit-hero-name" value="hey, i'm aditya">
+                    </div>
+                    <div class="edit-field">
+                        <label>Tagline</label>
+                        <input type="text" id="edit-hero-tagline" value="student, musician, and ai enthusiast :)">
+                    </div>
+                    <div class="edit-field">
+                        <label>Bio</label>
+                        <textarea id="edit-hero-bio">I'm a high school student at Trinity School with a passion for AI, music, and technology. Currently exploring machine learning, programming, and the future of artificial intelligence while maintaining a 4.0 GPA and leading jazz performances.</textarea>
+                    </div>
+                    <button class="save-button" onclick="saveProfile()">Save Profile</button>
+                </div>
+            </div>
 
-    <footer class="footer">
-        <div>© 2025 Aditya Jhalani</div>
-    </footer>
+            <!-- Achievements Section -->
+            <div class="admin-section" id="admin-achievements">
+                <button class="add-new-button" onclick="addNewAchievement()">+ Add New Achievement</button>
+                <div id="achievements-editor">
+                    <!-- Achievement editors will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Posts Section -->
+            <div class="admin-section" id="admin-posts">
+                <button class="add-new-button" onclick="addNewPost()">+ Add New Post</button>
+                <div id="posts-editor">
+                    <!-- Post editors will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="admin-section" id="admin-settings">
+                <div class="edit-group">
+                    <h3>Security Settings</h3>
+                    <div class="edit-field">
+                        <label>Admin Password</label>
+                        <input type="password" id="edit-admin-password" placeholder="Enter new password">
+                    </div>
+                    <div class="edit-field">
+                        <label>Confirm Password</label>
+                        <input type="password" id="confirm-admin-password" placeholder="Confirm new password">
+                    </div>
+                    <button class="save-button" onclick="changeAdminPassword()">Change Password</button>
+                </div>
+                
+                <div class="edit-group">
+                    <h3>Admin Panel Visibility</h3>
+                    <div class="edit-field">
+                        <label>
+                            <input type="checkbox" id="hide-admin-button" onchange="toggleAdminButtonVisibility()">
+                            Hide Admin button from footer (you can still access admin by typing your password in browser console: showAdminLogin())
+                        </label>
+                    </div>
+                </div>
+
+                <div class="edit-group">
+                    <h3>Data Management</h3>
+                    <div class="button-group">
+                        <button class="save-button" onclick="exportData()">Export Data</button>
+                        <button class="save-button" style="background: #666;" onclick="showImportData()">Import Data</button>
+                        <button class="delete-button" onclick="clearAllData()">Clear All Data</button>
+                    </div>
+                    <div class="edit-field" id="import-section" style="display: none; margin-top: 1rem;">
+                        <label>Import Data (JSON format)</label>
+                        <textarea id="import-data" placeholder="Paste exported JSON data here..."></textarea>
+                        <div class="button-group" style="margin-top: 0.5rem;">
+                            <button class="save-button" onclick="importData()">Import</button>
+                            <button class="save-button" style="background: #666;" onclick="hideImportData()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // IndexedDB setup for image storage
+        let db;
+        const DB_NAME = 'PortfolioImages';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'images';
+
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve();
+                };
+                
+                request.onupgradeneeded = (event) => {
+                    db = event.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME);
+                    }
+                };
+            });
+        }
+
+        function saveImageToDB(id, data) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.put(data, id);
+                
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        function getImageFromDB(id) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.get(id);
+                
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        function deleteImageFromDB(id) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.delete(id);
+                
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        function getAllImageIds() {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.getAllKeys();
+                
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // Data Storage
+        let siteData = {
+            profile: {
+                name: "hey, i'm aditya",
+                tagline: "student, musician, and ai enthusiast :)",
+                bio: "I'm a high school student at Trinity School with a passion for AI, music, and technology. Currently exploring machine learning, programming, and the future of artificial intelligence while maintaining a 4.0 GPA and leading jazz performances."
+            },
+            achievements: [
+                {
+                    id: 'achievement-1',
+                    title: 'Lead Alto Saxophonist & Gold Medalist',
+                    summary: 'Lead Alto Saxophonist for Trinity School Jazz Band with 6+ years of experience. Gold Medalist at WorldStrides Competition, performing at inter-school competitions and weekly jazz club sessions.',
+                    content: {
+                        title: 'Lead Alto Saxophonist & Gold Medalist',
+                        meta: 'Musical Journey • 2019-Present',
+                        body: [
+                            {type: 'paragraph', content: 'My journey with the alto saxophone began six years ago, but my love for music stretches back even further. As the Lead Alto Saxophonist for Trinity School\'s Jazz Band, I\'ve had the privilege of performing at numerous inter-school competitions and weekly jazz club sessions.'},
+                            {type: 'paragraph', content: 'The highlight of my musical career came when our ensemble won the Gold Medal at the WorldStrides Competition. This achievement wasn\'t just about technical proficiency—it was about understanding the soul of jazz, the importance of listening to fellow musicians, and the magic that happens when individual talents merge into something greater.'},
+                            {type: 'paragraph', content: 'Every Thursday evening, our jazz club transforms the music room into a creative laboratory where we experiment with improvisation, explore different jazz standards, and push the boundaries of our musical expression. These sessions have taught me that leadership in music isn\'t about playing the loudest—it\'s about knowing when to step forward and when to support others in their solos.'},
+                            {type: 'paragraph', content: 'Through jazz, I\'ve learned valuable lessons about collaboration, discipline, and creative expression that extend far beyond music. The improvisational nature of jazz has even influenced how I approach problem-solving in programming and AI development.'}
+                        ]
+                    }
+                },
+                {
+                    id: 'achievement-2',
+                    title: 'Honor Council Board Member',
+                    summary: "Elected to Trinity School's selective Honor Council Board (8 students chosen by student body), serving on the School Disciplinary Council to uphold academic honesty and ensure restorative justice.",
+                    content: {
+                        title: 'Honor Council Board Member',
+                        meta: 'Leadership & Ethics • 2024-Present',
+                        body: [
+                            {type: 'paragraph', content: 'Being elected to Trinity School\'s Honor Council Board represents one of my most meaningful leadership roles. Out of our entire student body, only eight students are chosen for this position, making it both an honor and a significant responsibility.'},
+                            {type: 'paragraph', content: 'The Honor Council serves as the backbone of our school\'s commitment to academic integrity and ethical behavior. As a board member, I participate in the School Disciplinary Council, where we review cases of potential honor code violations and work to uphold the principles of honesty and fairness that define our community.'},
+                            {type: 'paragraph', content: 'What I find most valuable about this role is our focus on restorative justice rather than punitive measures. We believe in helping students learn from their mistakes and grow as individuals. Each case we review is an opportunity to reinforce the importance of integrity while showing compassion and understanding for the pressures students face.'},
+                            {type: 'paragraph', content: 'This experience has deepened my understanding of ethical decision-making and reinforced my belief that leadership is about serving others and maintaining high standards while showing empathy. These lessons directly inform my thoughts on AI ethics and the importance of building technology that serves humanity responsibly.'}
+                        ]
+                    }
+                },
+                {
+                    id: 'achievement-3',
+                    title: 'Multi-Instrumentalist & Academic Excellence',
+                    summary: 'Maintaining a 4.0 unweighted GPA while mastering multiple instruments: 12+ years piano, 6+ years saxophone, 2 years violin, and 1 year flute. Active in basketball, environmental advocacy, and financial literacy.',
+                    content: {
+                        title: 'Multi-Instrumentalist & Academic Excellence',
+                        meta: 'Music & Academics • Ongoing Journey',
+                        body: [
+                            {type: 'paragraph', content: 'My musical journey began at age 4 with piano lessons, setting the foundation for what would become a lifelong passion for music. Over the past 12+ years, the piano has been my constant companion, teaching me discipline, patience, and the joy of artistic expression.'},
+                            {type: 'paragraph', content: 'Building on this foundation, I\'ve expanded my musical repertoire to include the alto saxophone (6+ years), violin (2 years), and most recently, the flute (1 year). Each instrument offers its own unique perspective on music and has contributed to my understanding of musical theory and performance.'},
+                            {type: 'paragraph', content: 'Balancing this intensive musical pursuit with academic excellence has been both challenging and rewarding. Maintaining a 4.0 unweighted GPA while dedicating hours to practice requires careful time management and prioritization. I\'ve found that the discipline learned through music directly translates to academic success.'},
+                            {type: 'paragraph', content: 'Beyond music and academics, I\'m actively involved in basketball, environmental advocacy through our school\'s sustainability committee, and financial literacy programs. I believe in the importance of being well-rounded and using my privileges and talents to make a positive impact in multiple areas.'}
+                        ]
+                    }
+                },
+                {
+                    id: 'achievement-4',
+                    title: 'AI & Programming Enthusiast',
+                    summary: 'Proficient in Python, CSS, HTML, and Java. Experienced with AI models including ChatGPT, Gemini, ElevenLabs, and Claude. Completed Advanced Macroeconomics at Johns Hopkins CTY summer program.',
+                    content: {
+                        title: 'AI & Programming Enthusiast',
+                        meta: 'Technology & Innovation • 2022-Present',
+                        body: [
+                            {type: 'paragraph', content: 'My fascination with artificial intelligence and programming began when I first encountered Python in a computer science class. What started as curiosity quickly evolved into a passion as I discovered the incredible potential of code to solve problems and create new possibilities.'},
+                            {type: 'paragraph', content: 'I\'ve become proficient in Python, CSS, HTML, and Java, using these languages to build various projects ranging from web applications to data analysis tools. My experience with AI models like ChatGPT, Gemini, ElevenLabs, and Claude has opened my eyes to the transformative potential of machine learning and natural language processing.'},
+                            {type: 'paragraph', content: 'During the summer of 2024, I attended the Johns Hopkins Center for Talented Youth (CTY) program, where I completed an Advanced Macroeconomics course. This experience not only deepened my understanding of economic principles but also showed me how AI and data analysis are revolutionizing economic modeling and prediction.'},
+                            {type: 'paragraph', content: 'I\'m particularly interested in the intersection of AI and education, exploring how these tools can personalize learning experiences and make quality education more accessible. As someone who will be part of the generation that grows up alongside AI, I feel a responsibility to understand these technologies deeply and contribute to their ethical development.'}
+                        ]
+                    }
+                }
+            ],
+            posts: [
+                {
+                    id: 'post-1',
+                    title: "AI in Education: A Student's Perspective",
+                    date: 'January 2025',
+                    summary: "As a high school student working with AI models like Claude, ChatGPT, and Gemini, I'm fascinated by how these tools are reshaping learning. From helping with complex macroeconomics concepts during my Johns Hopkins CTY program to exploring creative applications in music composition, AI is becoming an invaluable learning companion rather than a replacement for human creativity...",
+                    content: {
+                        title: "AI in Education: A Student's Perspective",
+                        meta: 'January 2025 • 8 min read',
+                        body: [
+                            {type: 'paragraph', content: "As a high school student in 2025, I'm living through what might be the most significant transformation in education since the invention of the printing press. AI models like Claude, ChatGPT, and Gemini aren't just tools—they're becoming learning companions that adapt to our individual needs and learning styles."},
+                            {type: 'paragraph', content: "During my Advanced Macroeconomics course at Johns Hopkins CTY, I experienced firsthand how AI can enhance complex learning. When struggling with econometric models, I used these AI assistants not to get answers, but to understand the underlying concepts. They could explain the same principle in multiple ways until one clicked, something even the best human teacher might struggle to do with limited time."},
+                            {type: 'paragraph', content: "What excites me most is how AI democratizes access to personalized education. Students who might not have access to tutors or advanced courses can now engage with AI systems that provide detailed, patient explanations at any hour. However, I believe the key is using AI as a complement to human instruction, not a replacement."},
+                            {type: 'paragraph', content: "The real magic happens when AI enhances human creativity rather than replacing it. In my music composition experiments, I've used AI to explore harmonic possibilities I might not have considered, but the emotional core—the soul of the music—still comes from human experience and expression."},
+                            {type: 'paragraph', content: "As we move forward, I believe the students who will thrive are those who learn to collaborate with AI effectively. It's not about having AI do our work for us; it's about using these tools to push our understanding deeper and explore ideas we couldn't access before. The future of education isn't human or AI—it's human and AI, working together to unlock potential we're only beginning to imagine."}
+                        ]
+                    }
+                },
+                {
+                    id: 'post-2',
+                    title: 'The Intersection of Music and Machine Learning',
+                    date: 'December 2024',
+                    summary: "Playing jazz for over 6 years has taught me about improvisation, pattern recognition, and creative expression—skills surprisingly relevant to AI development. I'm exploring how machine learning could analyze jazz harmonies and potentially assist in composition while preserving the human soul that makes music truly meaningful...",
+                    content: {
+                        title: 'The Intersection of Music and Machine Learning',
+                        meta: 'December 2024 • 10 min read',
+                        body: [
+                            {type: 'paragraph', content: "After six years of playing jazz, I've come to understand music as a complex system of patterns, emotions, and spontaneous creativity. Interestingly, these same elements are at the heart of machine learning, making the intersection of music and AI one of the most fascinating areas of technological development."},
+                            {type: 'paragraph', content: "Jazz improvisation has taught me about pattern recognition in ways that directly apply to understanding neural networks. When I'm soloing over chord changes, I'm essentially doing real-time pattern matching and generation—recognizing harmonic structures and creating melodic lines that fit within established frameworks while still expressing something unique."},
+                            {type: 'paragraph', content: "I've been experimenting with AI tools that analyze jazz harmonies and suggest chord progressions. What's remarkable is how these systems can identify patterns across thousands of jazz standards and propose variations that are both theoretically sound and creatively interesting. However, they still lack the intuitive understanding of tension and release that makes jazz truly compelling."},
+                            {type: 'paragraph', content: "The question that keeps me up at night is: can AI ever truly understand the emotional weight of a blue note or the spiritual significance of a John Coltrane solo? I believe the answer lies not in replacing human musicians but in creating tools that augment our creative capabilities."},
+                            {type: 'paragraph', content: "As I continue exploring both music and machine learning, I'm convinced that the future lies in collaborative systems where AI handles the computational heavy lifting—analyzing harmonic structures, suggesting variations, even generating backing tracks—while humans provide the soul, the intention, and the emotional narrative that transforms notes into music. It's not about AI making music; it's about AI helping us make better music, push boundaries, and explore sonic territories we couldn't reach alone."}
+                        ]
+                    }
+                },
+                {
+                    id: 'post-3',
+                    title: 'Building Tomorrow: Teen Perspective on AI Ethics',
+                    date: 'November 2024',
+                    summary: "As someone who will inherit the world these AI systems are building, I think about the ethical implications constantly. Through my Honor Council work and discussions in our Men of Color affinity group, I've learned how important it is to ensure AI development includes diverse voices and addresses bias from the ground up...",
+                    content: {
+                        title: 'Building Tomorrow: Teen Perspective on AI Ethics',
+                        meta: 'November 2024 • 12 min read',
+                        body: [
+                            {type: 'paragraph', content: "As a member of Generation Z, I'm part of the first generation to grow up with AI as a constant companion. This unique position gives us both a responsibility and an opportunity to shape how these technologies develop and integrate into society. The ethical implications of AI aren't abstract concepts for us—they're daily realities we navigate."},
+                            {type: 'paragraph', content: "My work on Trinity School's Honor Council has taught me about the complexity of ethical decision-making. When we review cases, we're not just enforcing rules; we're considering context, intent, and the broader implications of our decisions. These same principles must guide AI development."},
+                            {type: 'paragraph', content: "Through discussions in our Men of Color affinity group, I've gained deep insights into how bias in AI systems can perpetuate and amplify existing inequalities. When facial recognition systems struggle with darker skin tones or when language models reflect societal prejudices, these aren't just technical glitches—they're ethical failures that can cause real harm to real people."},
+                            {type: 'paragraph', content: "What gives me hope is the growing awareness among my peers about these issues. We're not passive consumers of AI technology; we're critical thinkers who question how these systems work and demand transparency and accountability. We understand that the decisions made about AI today will shape the world we inherit tomorrow."},
+                            {type: 'paragraph', content: "I believe the key to ethical AI development lies in inclusive design processes that bring diverse voices to the table from the beginning. It's not enough to fix bias after the fact—we need to build systems with equity and justice as foundational principles. As young people who will live with these technologies for decades to come, we must be active participants in shaping their development, not just end users of finished products."},
+                            {type: 'paragraph', content: "The future of AI ethics isn't about creating perfect systems—it's about building frameworks for continuous improvement, accountability, and human-centered design. My generation has the opportunity to do this right, and I'm committed to being part of that solution."}
+                        ]
+                    }
+                }
+            ],
+            imageRefs: {} // Only store image references, not the actual data
+        };
+
+        // Initialize IndexedDB on load
+        async function initializeApp() {
+            try {
+                await initDB();
+                await loadData();
+                
+                // Apply admin button visibility setting
+                const hideAdminButton = localStorage.getItem('hideAdminButton') === 'true';
+                if (hideAdminButton) {
+                    const adminButton = document.querySelector('.admin-button');
+                    if (adminButton) {
+                        adminButton.style.display = 'none';
+                    }
+                }
+                
+                // Hide loading screen
+                setTimeout(() => {
+                    const loading = document.getElementById('loading');
+                    if (loading) {
+                        loading.classList.add('hidden');
+                    }
+                }, 500);
+            } catch (error) {
+                console.error('Failed to initialize app:', error);
+                showToast('Failed to initialize image storage', 'error');
+            }
+        }
+
+        // Load data from localStorage and images from IndexedDB
+        async function loadData() {
+            const savedData = localStorage.getItem('portfolioData');
+            if (savedData) {
+                siteData = JSON.parse(savedData);
+                // Ensure imageRefs exists
+                if (!siteData.imageRefs) {
+                    siteData.imageRefs = {};
+                }
+                // For backward compatibility, move images to IndexedDB if they exist
+                if (siteData.images) {
+                    for (let id in siteData.images) {
+                        await saveImageToDB(id, siteData.images[id]);
+                        siteData.imageRefs[id] = true;
+                    }
+                    delete siteData.images;
+                    saveData();
+                }
+            }
+            renderContent();
+        }
+
+        // Save data to localStorage (without images)
+        function saveData() {
+            try {
+                localStorage.setItem('portfolioData', JSON.stringify(siteData));
+            } catch (e) {
+                if (e.name === 'QuotaExceededError') {
+                    showToast('Storage quota exceeded. Try removing some unused content.', 'error');
+                } else {
+                    showToast('Failed to save data', 'error');
+                }
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast show ${type}`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Convert content structure to HTML
+        async function contentToHTML(content) {
+            let html = `<h1>${content.title}</h1>`;
+            html += `<div class="detail-meta">${content.meta}</div>`;
+            html += '<div class="detail-body">';
+            
+            for (const item of content.body) {
+                switch(item.type) {
+                    case 'paragraph':
+                        html += `<p>${item.content}</p>`;
+                        break;
+                    case 'heading1':
+                        html += `<h1>${item.content}</h1>`;
+                        break;
+                    case 'heading2':
+                        html += `<h2>${item.content}</h2>`;
+                        break;
+                    case 'heading3':
+                        html += `<h3>${item.content}</h3>`;
+                        break;
+                    case 'image':
+                        // Check if src is an image ID
+                        if (item.src.startsWith('img_')) {
+                            const imageData = await getImageFromDB(item.src);
+                            if (imageData) {
+                                html += `<img src="${imageData}" alt="${item.alt || ''}">`;
+                            }
+                        } else {
+                            html += `<img src="${item.src}" alt="${item.alt || ''}">`;
+                        }
+                        break;
+                    case 'list':
+                        html += item.ordered ? '<ol>' : '<ul>';
+                        item.items.forEach(li => {
+                            html += `<li>${li}</li>`;
+                        });
+                        html += item.ordered ? '</ol>' : '</ul>';
+                        break;
+                    case 'quote':
+                        html += `<blockquote>${item.content}</blockquote>`;
+                        break;
+                }
+            }
+            
+            html += '</div>';
+            return html;
+        }
+
+        // Render main content
+        function renderContent() {
+            // Update profile
+            document.getElementById('hero-name').textContent = siteData.profile.name;
+            document.getElementById('hero-tagline').textContent = siteData.profile.tagline;
+            document.getElementById('hero-bio').textContent = siteData.profile.bio;
+
+            // Render achievements
+            const achievementsContainer = document.getElementById('achievements-container');
+            achievementsContainer.innerHTML = '';
+            siteData.achievements.forEach(achievement => {
+                const div = document.createElement('div');
+                div.className = 'achievement';
+                div.id = achievement.id;
+                div.onclick = () => navigateToDetail(achievement.id);
+                div.innerHTML = `
+                    <h3>${achievement.title} →</h3>
+                    <p>${achievement.summary}</p>
+                `;
+                achievementsContainer.appendChild(div);
+            });
+
+            // Render posts
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = '';
+            siteData.posts.forEach(post => {
+                const div = document.createElement('div');
+                div.className = 'post';
+                div.id = post.id;
+                div.onclick = () => navigateToDetail(post.id);
+                div.innerHTML = `
+                    <h3>${post.title} →</h3>
+                    <p class="date">${post.date}</p>
+                    <p class="post-content">${post.summary}</p>
+                `;
+                postsContainer.appendChild(div);
+            });
+
+            // Re-observe for animations
+            observeElements();
+        }
+
+        // Navigation functions
+        async function navigateToDetail(id) {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('nav-bar').classList.add('visible');
+            
+            // Find the content
+            let content = null;
+            const achievement = siteData.achievements.find(a => a.id === id);
+            const post = siteData.posts.find(p => p.id === id);
+            
+            if (achievement) content = achievement.content;
+            if (post) content = post.content;
+            
+            if (content) {
+                // Create or update detail page
+                let detailPage = document.getElementById(`detail-${id}`);
+                if (!detailPage) {
+                    detailPage = document.createElement('div');
+                    detailPage.className = 'detail-page';
+                    detailPage.id = `detail-${id}`;
+                    document.getElementById('detail-pages').appendChild(detailPage);
+                }
+                
+                const htmlContent = await contentToHTML(content);
+                detailPage.innerHTML = `<div class="detail-content">${htmlContent}</div>`;
+                
+                // Hide all detail pages
+                document.querySelectorAll('.detail-page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show the selected detail page
+                detailPage.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function navigateToHome() {
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('nav-bar').classList.remove('visible');
+            
+            // Hide all detail pages
+            document.querySelectorAll('.detail-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Admin functions
+        let ADMIN_PASSWORD = localStorage.getItem('adminPassword') || "test123";
+
+        function showLoginModal() {
+            document.getElementById('login-modal').classList.add('active');
+            document.getElementById('admin-password').focus();
+        }
+
+        function hideLoginModal() {
+            document.getElementById('login-modal').classList.remove('active');
+            document.getElementById('admin-password').value = '';
+        }
+
+        async function attemptLogin() {
+            const password = document.getElementById('admin-password').value;
+            if (password === ADMIN_PASSWORD) {
+                hideLoginModal();
+                await showAdminPanel();
+            } else {
+                showToast('Incorrect password', 'error');
+                document.getElementById('admin-password').value = '';
+            }
+        }
+
+        async function showAdminPanel() {
+            document.getElementById('admin-panel').classList.add('active');
+            await loadAdminData();
+        }
+
+        function exitAdmin() {
+            document.getElementById('admin-panel').classList.remove('active');
+        }
+
+        function switchAdminTab(tab) {
+            // Update nav buttons
+            document.querySelectorAll('.admin-nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Show correct section
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`admin-${tab}`).classList.add('active');
+        }
+
+        async function loadAdminData() {
+            // Load profile data
+            document.getElementById('edit-hero-name').value = siteData.profile.name;
+            document.getElementById('edit-hero-tagline').value = siteData.profile.tagline;
+            document.getElementById('edit-hero-bio').value = siteData.profile.bio;
+
+            // Load settings
+            const hideAdminButton = localStorage.getItem('hideAdminButton') === 'true';
+            document.getElementById('hide-admin-button').checked = hideAdminButton;
+
+            // Load achievements
+            await renderAchievementEditors();
+
+            // Load posts
+            await renderPostEditors();
+        }
+
+        function saveProfile() {
+            siteData.profile.name = document.getElementById('edit-hero-name').value;
+            siteData.profile.tagline = document.getElementById('edit-hero-tagline').value;
+            siteData.profile.bio = document.getElementById('edit-hero-bio').value;
+            
+            saveData();
+            renderContent();
+            showToast('Profile saved successfully!');
+        }
+
+        // Store cursor position for each editor
+        const editorCursorPositions = {};
+
+        // Rich text editor functions
+        async function createEditor(contentBody, editorId, images = []) {
+            const toolbar = document.createElement('div');
+            toolbar.className = 'editor-toolbar';
+            toolbar.innerHTML = `
+                <button class="editor-button" onclick="formatText('bold', '${editorId}')"><b>B</b></button>
+                <button class="editor-button" onclick="formatText('italic', '${editorId}')"><i>I</i></button>
+                <button class="editor-button" onclick="insertHeading('h1', '${editorId}')">H1</button>
+                <button class="editor-button" onclick="insertHeading('h2', '${editorId}')">H2</button>
+                <button class="editor-button" onclick="insertHeading('h3', '${editorId}')">H3</button>
+                <button class="editor-button" onclick="insertList('ul', '${editorId}')">• List</button>
+                <button class="editor-button" onclick="insertList('ol', '${editorId}')">1. List</button>
+                <button class="editor-button" onclick="insertQuote('${editorId}')">Quote</button>
+                <div class="image-upload-wrapper">
+                    <input type="file" class="image-upload-input" id="image-${editorId}" accept="image/*" onchange="handleImageUpload(event, '${editorId}')">
+                    <label for="image-${editorId}" class="image-upload-label" onclick="saveCursorPosition('${editorId}')">📷 Add Image</label>
+                </div>
+            `;
+
+            const editor = document.createElement('div');
+            editor.className = 'editor-content';
+            editor.contentEditable = true;
+            editor.id = editorId;
+            
+            // Save cursor position on blur
+            editor.addEventListener('blur', () => {
+                saveCursorPosition(editorId);
+            });
+            
+            // Populate editor with existing content
+            let html = '';
+            let hasContent = false;
+            
+            for (const item of contentBody) {
+                hasContent = true;
+                switch(item.type) {
+                    case 'paragraph':
+                        html += `<p>${item.content}</p>`;
+                        break;
+                    case 'heading1':
+                        html += `<h1>${item.content}</h1>`;
+                        break;
+                    case 'heading2':
+                        html += `<h2>${item.content}</h2>`;
+                        break;
+                    case 'heading3':
+                        html += `<h3>${item.content}</h3>`;
+                        break;
+                    case 'image':
+                        // For existing images, check if it's an image ID or direct data
+                        if (item.src.startsWith('img_')) {
+                            // It's an image ID, get from IndexedDB
+                            const imageData = await getImageFromDB(item.src);
+                            if (imageData) {
+                                html += `<img src="${imageData}" data-img-id="${item.src}" alt="${item.alt || ''}" style="max-width: 100%; height: auto; display: block; margin: 1rem 0;">`;
+                            }
+                        } else {
+                            html += `<img src="${item.src}" alt="${item.alt || ''}" style="max-width: 100%; height: auto; display: block; margin: 1rem 0;">`;
+                        }
+                        break;
+                    case 'list':
+                        html += item.ordered ? '<ol>' : '<ul>';
+                        item.items.forEach(li => {
+                            html += `<li>${li}</li>`;
+                        });
+                        html += item.ordered ? '</ol>' : '</ul>';
+                        break;
+                    case 'quote':
+                        html += `<blockquote>${item.content}</blockquote>`;
+                        break;
+                }
+            }
+            
+            // Set content or placeholder
+            if (hasContent && html) {
+                editor.innerHTML = html;
+            } else {
+                editor.innerHTML = '<p>Start typing your content here...</p>';
+                // Clear placeholder on focus
+                editor.addEventListener('focus', function handleFocus() {
+                    if (editor.innerHTML === '<p>Start typing your content here...</p>') {
+                        editor.innerHTML = '<p><br></p>';
+                    }
+                    editor.removeEventListener('focus', handleFocus);
+                });
+            }
+
+            const container = document.createElement('div');
+            container.appendChild(toolbar);
+            container.appendChild(editor);
+
+            // Add image gallery if images exist
+            if (images.length > 0) {
+                const gallery = document.createElement('div');
+                gallery.className = 'image-gallery';
+                gallery.id = `gallery-${editorId}`;
+                gallery.innerHTML = '<label style="grid-column: 1/-1; color: #aaa; font-size: 0.9rem;">Uploaded Images (click to insert)</label>';
+                
+                for (const imgId of images) {
+                    const imageData = await getImageFromDB(imgId);
+                    if (imageData) {
+                        const imgItem = document.createElement('div');
+                        imgItem.className = 'image-gallery-item';
+                        imgItem.setAttribute('data-img-id', imgId);
+                        
+                        const img = document.createElement('img');
+                        img.src = imageData;
+                        img.style.cursor = 'pointer';
+                        img.addEventListener('click', () => {
+                            insertImageWithId(editorId, imgId, imageData);
+                        });
+                        
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'remove-image';
+                        removeBtn.textContent = 'Remove';
+                        removeBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            removeImage(editorId, imgId);
+                        });
+                        
+                        imgItem.appendChild(img);
+                        imgItem.appendChild(removeBtn);
+                        gallery.appendChild(imgItem);
+                    }
+                }
+                
+                container.appendChild(gallery);
+            }
+
+            return container;
+        }
+
+        function saveCursorPosition(editorId) {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                editorCursorPositions[editorId] = selection.getRangeAt(0).cloneRange();
+            }
+        }
+
+        function restoreCursorPosition(editorId) {
+            const editor = document.getElementById(editorId);
+            if (editor && editorCursorPositions[editorId]) {
+                editor.focus();
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(editorCursorPositions[editorId]);
+            }
+        }
+
+        // Make functions globally available for onclick handlers
+        window.formatText = formatText;
+        window.insertHeading = insertHeading;
+        window.insertList = insertList;
+        window.insertQuote = insertQuote;
+        window.handleImageUpload = handleImageUpload;
+        window.insertImageWithId = insertImageWithId;
+        window.removeImage = removeImage;
+        window.navigateToDetail = navigateToDetail;
+        window.navigateToHome = navigateToHome;
+        window.showLoginModal = showLoginModal;
+        window.hideLoginModal = hideLoginModal;
+        window.attemptLogin = attemptLogin;
+        window.showAdminPanel = showAdminPanel;
+        window.exitAdmin = exitAdmin;
+        window.switchAdminTab = switchAdminTab;
+        window.saveProfile = saveProfile;
+        window.saveAchievement = saveAchievement;
+        window.savePost = savePost;
+        window.deleteAchievement = deleteAchievement;
+        window.deletePost = deletePost;
+        window.addNewAchievement = addNewAchievement;
+        window.addNewPost = addNewPost;
+        window.previewAchievement = previewAchievement;
+        window.previewPost = previewPost;
+        window.saveCursorPosition = saveCursorPosition;
+        window.restoreCursorPosition = restoreCursorPosition;
+        window.changeAdminPassword = changeAdminPassword;
+        window.toggleAdminButtonVisibility = toggleAdminButtonVisibility;
+        window.exportData = exportData;
+        window.importData = importData;
+        window.showImportData = showImportData;
+        window.hideImportData = hideImportData;
+        window.clearAllData = clearAllData;
+        window.showAdminLogin = showLoginModal;
+
+        function formatText(command, editorId) {
+            document.execCommand(command, false, null);
+            document.getElementById(editorId).focus();
+        }
+
+        function insertHeading(level, editorId) {
+            const selection = window.getSelection();
+            const text = selection.toString() || 'Heading';
+            document.execCommand('insertHTML', false, `<${level}>${text}</${level}>`);
+            document.getElementById(editorId).focus();
+        }
+
+        function insertList(type, editorId) {
+            const command = type === 'ul' ? 'insertUnorderedList' : 'insertOrderedList';
+            document.execCommand(command, false, null);
+            document.getElementById(editorId).focus();
+        }
+
+        function insertQuote(editorId) {
+            const selection = window.getSelection();
+            const text = selection.toString() || 'Quote text';
+            document.execCommand('insertHTML', false, `<blockquote>${text}</blockquote>`);
+            document.getElementById(editorId).focus();
+        }
+
+        function insertImage(editorId, src) {
+            const editor = document.getElementById(editorId);
+            if (editor) {
+                editor.focus();
+                document.execCommand('insertHTML', false, `<img src="${src}" alt="">`);
+            } else {
+                console.error('Editor not found:', editorId);
+            }
+        }
+
+        function insertImageWithId(editorId, imgId, src) {
+            const editor = document.getElementById(editorId);
+            if (editor) {
+                // Restore cursor position if available
+                if (editorCursorPositions[editorId]) {
+                    editor.focus();
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(editorCursorPositions[editorId]);
+                } else {
+                    editor.focus();
+                }
+                
+                // Create the image HTML
+                const imgHtml = `<img src="${src}" data-img-id="${imgId}" alt="" style="max-width: 100%; height: auto; display: block; margin: 1rem 0;">`;
+                
+                // Try to insert at cursor position
+                const selection = window.getSelection();
+                if (selection.rangeCount > 0) {
+                    const range = selection.getRangeAt(0);
+                    range.deleteContents();
+                    
+                    // Create a temporary div to hold the HTML
+                    const temp = document.createElement('div');
+                    temp.innerHTML = imgHtml;
+                    const img = temp.firstChild;
+                    
+                    range.insertNode(img);
+                    
+                    // Move cursor after the image
+                    range.setStartAfter(img);
+                    range.setEndAfter(img);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                } else {
+                    // Fallback: append to editor
+                    editor.innerHTML += imgHtml;
+                }
+                
+                // Clear saved cursor position
+                delete editorCursorPositions[editorId];
+                
+                // Trigger input event to ensure any listeners are notified
+                editor.dispatchEvent(new Event('input', { bubbles: true }));
+            } else {
+                console.error('Editor not found:', editorId);
+            }
+        }
+
+        async function handleImageUpload(event, editorId) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                // Check file size (limit to 10MB per image)
+                if (file.size > 10 * 1024 * 1024) {
+                    showToast('Image size should be less than 10MB', 'error');
+                    return;
+                }
+
+                showToast('Processing image...', 'success');
+
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    try {
+                        const imgId = `img_${Date.now()}`;
+                        
+                        // Determine compression settings based on file size
+                        let maxWidth = 1200;
+                        let quality = 0.85;
+                        
+                        if (file.size > 5 * 1024 * 1024) {
+                            // For images > 5MB, use more aggressive compression
+                            maxWidth = 1000;
+                            quality = 0.7;
+                        } else if (file.size > 3 * 1024 * 1024) {
+                            // For images > 3MB, use moderate compression
+                            maxWidth = 1100;
+                            quality = 0.75;
+                        }
+                        
+                        // Compress image
+                        let compressedData = await compressImage(e.target.result, maxWidth, quality);
+                        
+                        // Check compressed size and compress more if needed
+                        const compressedSize = (compressedData.length * 3) / 4; // Approximate size in bytes
+                        
+                        if (compressedSize > 2 * 1024 * 1024) {
+                            // If still too large, compress more aggressively
+                            compressedData = await compressImage(e.target.result, 800, 0.6);
+                        }
+                        
+                        // Save to IndexedDB
+                        await saveImageToDB(imgId, compressedData);
+                        siteData.imageRefs[imgId] = true;
+                        
+                        // Insert image into editor
+                        // Get the editor
+                        const editor = document.getElementById(editorId);
+                        if (editor) {
+                            // Create image element
+                            const img = document.createElement('img');
+                            img.src = compressedData;
+                            img.setAttribute('data-img-id', imgId);
+                            img.alt = '';
+                            img.style.maxWidth = '100%';
+                            img.style.height = 'auto';
+                            img.style.display = 'block';
+                            img.style.margin = '1rem 0';
+                            
+                            // Insert at cursor or append
+                            const selection = window.getSelection();
+                            if (selection.rangeCount > 0 && editor.contains(selection.anchorNode)) {
+                                const range = selection.getRangeAt(0);
+                                range.insertNode(img);
+                                range.setStartAfter(img);
+                                range.setEndAfter(img);
+                                selection.removeAllRanges();
+                                selection.addRange(range);
+                            } else {
+                                // If no selection or selection outside editor, append
+                                editor.appendChild(img);
+                            }
+                            
+                            // Trigger input event
+                            editor.dispatchEvent(new Event('input', { bubbles: true }));
+                            
+                            // Small delay to ensure DOM is updated
+                            await new Promise(resolve => setTimeout(resolve, 100));
+                            
+                            // Verify the image was inserted
+                            const insertedImg = editor.querySelector(`img[data-img-id="${imgId}"]`);
+                            
+                            if (!insertedImg) {
+                                console.error('Image was not found in editor after insertion');
+                                showToast('Image insertion failed. Please try again.', 'error');
+                                return;
+                            }
+                        }
+                        
+                        // Update just the gallery without re-rendering the entire editor
+                        await updateImageGallery(editorId, imgId, compressedData);
+                        
+                        saveData();
+                        showToast('Image uploaded successfully!', 'success');
+                        
+                        // Clear the file input so the same file can be uploaded again if needed
+                        event.target.value = '';
+                        
+                    } catch (error) {
+                        console.error('Failed to save image:', error);
+                        showToast('Failed to save image. Try a smaller image.', 'error');
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Update just the image gallery for an editor
+        async function updateImageGallery(editorId, newImgId, imageData) {
+            // Find the gallery element
+            let gallery;
+            let index;
+            
+            if (editorId.includes('achievement')) {
+                index = parseInt(editorId.replace('achievement-editor-', ''));
+                gallery = document.querySelector(`#editor-container-${index} .image-gallery`);
+                
+                // Update the images array for this achievement
+                if (!siteData.achievements[index].images) {
+                    siteData.achievements[index].images = [];
+                }
+                if (!siteData.achievements[index].images.includes(newImgId)) {
+                    siteData.achievements[index].images.push(newImgId);
+                }
+            } else if (editorId.includes('post')) {
+                index = parseInt(editorId.replace('post-editor-', ''));
+                gallery = document.querySelector(`#editor-container-post-${index} .image-gallery`);
+                
+                // Update the images array for this post
+                if (!siteData.posts[index].images) {
+                    siteData.posts[index].images = [];
+                }
+                if (!siteData.posts[index].images.includes(newImgId)) {
+                    siteData.posts[index].images.push(newImgId);
+                }
+            }
+            
+            // If gallery exists, add the new image
+            if (gallery) {
+                const imgItem = document.createElement('div');
+                imgItem.className = 'image-gallery-item';
+                imgItem.setAttribute('data-img-id', newImgId);
+                
+                const img = document.createElement('img');
+                img.src = imageData;
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', () => {
+                    insertImageWithId(editorId, newImgId, imageData);
+                });
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-image';
+                removeBtn.textContent = 'Remove';
+                removeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    removeImage(editorId, newImgId);
+                });
+                
+                imgItem.appendChild(img);
+                imgItem.appendChild(removeBtn);
+                gallery.appendChild(imgItem);
+            } else {
+                // If no gallery exists yet, create one
+                const editorContainer = document.getElementById(editorId).parentElement;
+                const newGallery = document.createElement('div');
+                newGallery.className = 'image-gallery';
+                newGallery.id = `gallery-${editorId}`;
+                newGallery.innerHTML = '<label style="grid-column: 1/-1; color: #aaa; font-size: 0.9rem;">Uploaded Images (click to insert)</label>';
+                
+                const imgItem = document.createElement('div');
+                imgItem.className = 'image-gallery-item';
+                imgItem.setAttribute('data-img-id', newImgId);
+                
+                const img = document.createElement('img');
+                img.src = imageData;
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', () => {
+                    insertImageWithId(editorId, newImgId, imageData);
+                });
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-image';
+                removeBtn.textContent = 'Remove';
+                removeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    removeImage(editorId, newImgId);
+                });
+                
+                imgItem.appendChild(img);
+                imgItem.appendChild(removeBtn);
+                newGallery.appendChild(imgItem);
+                editorContainer.appendChild(newGallery);
+            }
+        }
+
+        // Compress image to reduce storage size
+        function compressImage(dataUrl, maxWidth, quality) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = function() {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        // Calculate new dimensions
+                        if (width > maxWidth) {
+                            height = Math.round((maxWidth / width) * height);
+                            width = maxWidth;
+                        }
+
+                        // Also limit height to prevent very tall images
+                        const maxHeight = maxWidth * 1.5;
+                        if (height > maxHeight) {
+                            width = Math.round((maxHeight / height) * width);
+                            height = maxHeight;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Use better image smoothing
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'high';
+                        
+                        // Fill with white background for better JPEG compression
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.fillRect(0, 0, width, height);
+                        
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Convert to compressed format
+                        canvas.toBlob(function(blob) {
+                            if (blob) {
+                                const reader = new FileReader();
+                                reader.onloadend = function() {
+                                    resolve(reader.result);
+                                };
+                                reader.onerror = reject;
+                                reader.readAsDataURL(blob);
+                            } else {
+                                reject(new Error('Failed to compress image'));
+                            }
+                        }, 'image/jpeg', quality);
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                img.onerror = () => reject(new Error('Failed to load image'));
+                img.src = dataUrl;
+            });
+        }
+
+        async function removeImage(editorId, imgId) {
+            if (confirm('Are you sure you want to remove this image?')) {
+                try {
+                    // Remove from the gallery UI using data attribute
+                    const imgItem = document.querySelector(`.image-gallery-item[data-img-id="${imgId}"]`);
+                    if (imgItem) {
+                        imgItem.remove();
+                    }
+                    
+                    // Update the data
+                    if (editorId.includes('achievement')) {
+                        const index = parseInt(editorId.replace('achievement-editor-', ''));
+                        if (siteData.achievements[index].images) {
+                            siteData.achievements[index].images = siteData.achievements[index].images.filter(id => id !== imgId);
+                        }
+                    } else if (editorId.includes('post')) {
+                        const index = parseInt(editorId.replace('post-editor-', ''));
+                        if (siteData.posts[index].images) {
+                            siteData.posts[index].images = siteData.posts[index].images.filter(id => id !== imgId);
+                        }
+                    }
+                    
+                    // Check if image is used elsewhere
+                    let isUsedElsewhere = false;
+                    
+                    // Check achievements
+                    for (const achievement of siteData.achievements) {
+                        for (const item of achievement.content.body) {
+                            if (item.type === 'image' && item.src === imgId) {
+                                isUsedElsewhere = true;
+                                break;
+                            }
+                        }
+                        if (achievement.images && achievement.images.includes(imgId)) {
+                            isUsedElsewhere = true;
+                            break;
+                        }
+                    }
+                    
+                    // Check posts
+                    if (!isUsedElsewhere) {
+                        for (const post of siteData.posts) {
+                            for (const item of post.content.body) {
+                                if (item.type === 'image' && item.src === imgId) {
+                                    isUsedElsewhere = true;
+                                    break;
+                                }
+                            }
+                            if (post.images && post.images.includes(imgId)) {
+                                isUsedElsewhere = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // If not used elsewhere, delete from IndexedDB
+                    if (!isUsedElsewhere) {
+                        await deleteImageFromDB(imgId);
+                        delete siteData.imageRefs[imgId];
+                    }
+                    
+                    saveData();
+                    showToast('Image removed from gallery');
+                    
+                } catch (error) {
+                    console.error('Failed to remove image:', error);
+                    showToast('Failed to remove image', 'error');
+                }
+            }
+        }
+
+        function parseEditorContent(editorId) {
+            const editor = document.getElementById(editorId);
+            const content = [];
+            
+            // Check if editor is empty or only has placeholder
+            if (editor.innerHTML === '<p>Start typing your content here...</p>' || 
+                editor.innerHTML === '<p><br></p>' || 
+                editor.innerHTML.trim() === '') {
+                return content;
+            }
+            
+            const processNode = (node) => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    const text = node.textContent.trim();
+                    if (text && text !== 'Start typing your content here...') {
+                        content.push({type: 'paragraph', content: text});
+                    }
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    const tag = node.tagName.toLowerCase();
+                    const text = node.textContent.trim();
+                    
+                    switch(tag) {
+                        case 'p':
+                            if (text && text !== 'Start typing your content here...') {
+                                content.push({type: 'paragraph', content: text});
+                            }
+                            break;
+                        case 'h1':
+                            if (text) content.push({type: 'heading1', content: text});
+                            break;
+                        case 'h2':
+                            if (text) content.push({type: 'heading2', content: text});
+                            break;
+                        case 'h3':
+                            if (text) content.push({type: 'heading3', content: text});
+                            break;
+                        case 'img':
+                            // Check if it has an image ID
+                            const imgId = node.getAttribute('data-img-id');
+                            if (imgId) {
+                                content.push({type: 'image', src: imgId, alt: node.alt || ''});
+                            } else if (node.src) {
+                                content.push({type: 'image', src: node.src, alt: node.alt || ''});
+                            }
+                            break;
+                        case 'ul':
+                        case 'ol':
+                            const items = [];
+                            node.querySelectorAll('li').forEach(li => {
+                                const liText = li.textContent.trim();
+                                if (liText) {
+                                    items.push(liText);
+                                }
+                            });
+                            if (items.length > 0) {
+                                content.push({type: 'list', ordered: tag === 'ol', items: items});
+                            }
+                            break;
+                        case 'blockquote':
+                            if (text) content.push({type: 'quote', content: text});
+                            break;
+                        case 'div':
+                        case 'br':
+                            // Process children
+                            node.childNodes.forEach(child => processNode(child));
+                            break;
+                    }
+                }
+            };
+            
+            editor.childNodes.forEach(node => processNode(node));
+            
+            return content;
+        }
+
+        async function renderAchievementEditors() {
+            const container = document.getElementById('achievements-editor');
+            container.innerHTML = '';
+            
+            for (let index = 0; index < siteData.achievements.length; index++) {
+                const achievement = siteData.achievements[index];
+                const div = document.createElement('div');
+                div.className = 'edit-group';
+                
+                const editorId = `achievement-editor-${index}`;
+                const editorContainer = await createEditor(achievement.content.body, editorId, achievement.images || []);
+                
+                div.innerHTML = `
+                    <h3>Achievement ${index + 1}</h3>
+                    <div class="edit-field">
+                        <label>Title</label>
+                        <input type="text" id="achievement-title-${index}" value="${achievement.title}">
+                    </div>
+                    <div class="edit-field">
+                        <label>Summary (appears on main page)</label>
+                        <textarea id="achievement-summary-${index}">${achievement.summary}</textarea>
+                    </div>
+                    <div class="edit-field">
+                        <label>Category/Timeline</label>
+                        <input type="text" id="achievement-meta-${index}" value="${achievement.content.meta}">
+                    </div>
+                    <div class="edit-field">
+                        <label>Full Content</label>
+                        <div id="editor-container-${index}"></div>
+                    </div>
+                    <div class="preview-section">
+                        <label class="preview-label">Preview</label>
+                        <div class="preview-content" id="preview-achievement-${index}"></div>
+                    </div>
+                    <div class="button-group">
+                        <button class="save-button" onclick="saveAchievement(${index})">Save Achievement</button>
+                        <button class="save-button" style="background: #666;" onclick="previewAchievement(${index})">Update Preview</button>
+                        <button class="delete-button" onclick="deleteAchievement(${index})">Delete</button>
+                    </div>
+                `;
+                
+                container.appendChild(div);
+                
+                // Add the editor after the div is in the DOM
+                document.getElementById(`editor-container-${index}`).appendChild(editorContainer);
+                
+                // Show initial preview
+                await previewAchievement(index);
+            }
+        }
+
+        async function renderPostEditors() {
+            const container = document.getElementById('posts-editor');
+            container.innerHTML = '';
+            
+            for (let index = 0; index < siteData.posts.length; index++) {
+                const post = siteData.posts[index];
+                const div = document.createElement('div');
+                div.className = 'edit-group';
+                
+                const editorId = `post-editor-${index}`;
+                const editorContainer = await createEditor(post.content.body, editorId, post.images || []);
+                
+                div.innerHTML = `
+                    <h3>Post ${index + 1}</h3>
+                    <div class="edit-field">
+                        <label>Title</label>
+                        <input type="text" id="post-title-${index}" value="${post.title}">
+                    </div>
+                    <div class="edit-field">
+                        <label>Date</label>
+                        <input type="text" id="post-date-${index}" value="${post.date}">
+                    </div>
+                    <div class="edit-field">
+                        <label>Summary (appears on main page)</label>
+                        <textarea id="post-summary-${index}">${post.summary}</textarea>
+                    </div>
+                    <div class="edit-field">
+                        <label>Reading Time</label>
+                        <input type="text" id="post-meta-${index}" value="${post.content.meta}">
+                    </div>
+                    <div class="edit-field">
+                        <label>Full Content</label>
+                        <div id="editor-container-post-${index}"></div>
+                    </div>
+                    <div class="preview-section">
+                        <label class="preview-label">Preview</label>
+                        <div class="preview-content" id="preview-post-${index}"></div>
+                    </div>
+                    <div class="button-group">
+                        <button class="save-button" onclick="savePost(${index})">Save Post</button>
+                        <button class="save-button" style="background: #666;" onclick="previewPost(${index})">Update Preview</button>
+                        <button class="delete-button" onclick="deletePost(${index})">Delete</button>
+                    </div>
+                `;
+                
+                container.appendChild(div);
+                
+                // Add the editor after the div is in the DOM
+                document.getElementById(`editor-container-post-${index}`).appendChild(editorContainer);
+                
+                // Show initial preview
+                await previewPost(index);
+            }
+        }
+
+        async function previewAchievement(index) {
+            const content = {
+                title: document.getElementById(`achievement-title-${index}`).value,
+                meta: document.getElementById(`achievement-meta-${index}`).value,
+                body: parseEditorContent(`achievement-editor-${index}`)
+            };
+            
+            const preview = document.getElementById(`preview-achievement-${index}`);
+            preview.innerHTML = await contentToHTML(content);
+        }
+
+        async function previewPost(index) {
+            const content = {
+                title: document.getElementById(`post-title-${index}`).value,
+                meta: document.getElementById(`post-meta-${index}`).value,
+                body: parseEditorContent(`post-editor-${index}`)
+            };
+            
+            const preview = document.getElementById(`preview-post-${index}`);
+            preview.innerHTML = await contentToHTML(content);
+        }
+
+        async function saveAchievement(index) {
+            // Update preview first to parse current content
+            await previewAchievement(index);
+            
+            siteData.achievements[index].title = document.getElementById(`achievement-title-${index}`).value;
+            siteData.achievements[index].summary = document.getElementById(`achievement-summary-${index}`).value;
+            siteData.achievements[index].content = {
+                title: document.getElementById(`achievement-title-${index}`).value,
+                meta: document.getElementById(`achievement-meta-${index}`).value,
+                body: parseEditorContent(`achievement-editor-${index}`)
+            };
+            
+            // Save associated images from the parsed content
+            const images = [];
+            siteData.achievements[index].content.body.forEach(item => {
+                if (item.type === 'image' && item.src.startsWith('img_')) {
+                    images.push(item.src);
+                }
+            });
+            siteData.achievements[index].images = [...new Set(images)]; // Remove duplicates
+            
+            saveData();
+            renderContent();
+            showToast('Achievement saved successfully!');
+        }
+
+        async function savePost(index) {
+            // Update preview first to parse current content
+            await previewPost(index);
+            
+            siteData.posts[index].title = document.getElementById(`post-title-${index}`).value;
+            siteData.posts[index].date = document.getElementById(`post-date-${index}`).value;
+            siteData.posts[index].summary = document.getElementById(`post-summary-${index}`).value;
+            siteData.posts[index].content = {
+                title: document.getElementById(`post-title-${index}`).value,
+                meta: document.getElementById(`post-meta-${index}`).value,
+                body: parseEditorContent(`post-editor-${index}`)
+            };
+            
+            // Save associated images from the parsed content
+            const images = [];
+            siteData.posts[index].content.body.forEach(item => {
+                if (item.type === 'image' && item.src.startsWith('img_')) {
+                    images.push(item.src);
+                }
+            });
+            siteData.posts[index].images = [...new Set(images)]; // Remove duplicates
+            
+            saveData();
+            renderContent();
+            showToast('Post saved successfully!');
+        }
+
+        async function deleteAchievement(index) {
+            if (confirm('Are you sure you want to delete this achievement?')) {
+                // Clean up associated images
+                const achievement = siteData.achievements[index];
+                if (achievement.images) {
+                    for (const imgId of achievement.images) {
+                        // Check if image is used elsewhere
+                        let isUsedElsewhere = false;
+                        siteData.achievements.forEach((a, i) => {
+                            if (i !== index && a.images && a.images.includes(imgId)) {
+                                isUsedElsewhere = true;
+                            }
+                        });
+                        siteData.posts.forEach(p => {
+                            if (p.images && p.images.includes(imgId)) {
+                                isUsedElsewhere = true;
+                            }
+                        });
+                        
+                        if (!isUsedElsewhere) {
+                            await deleteImageFromDB(imgId);
+                            delete siteData.imageRefs[imgId];
+                        }
+                    }
+                }
+                
+                siteData.achievements.splice(index, 1);
+                saveData();
+                renderContent();
+                renderAchievementEditors();
+                showToast('Achievement deleted');
+            }
+        }
+
+        async function deletePost(index) {
+            if (confirm('Are you sure you want to delete this post?')) {
+                // Clean up associated images
+                const post = siteData.posts[index];
+                if (post.images) {
+                    for (const imgId of post.images) {
+                        // Check if image is used elsewhere
+                        let isUsedElsewhere = false;
+                        siteData.achievements.forEach(a => {
+                            if (a.images && a.images.includes(imgId)) {
+                                isUsedElsewhere = true;
+                            }
+                        });
+                        siteData.posts.forEach((p, i) => {
+                            if (i !== index && p.images && p.images.includes(imgId)) {
+                                isUsedElsewhere = true;
+                            }
+                        });
+                        
+                        if (!isUsedElsewhere) {
+                            await deleteImageFromDB(imgId);
+                            delete siteData.imageRefs[imgId];
+                        }
+                    }
+                }
+                
+                siteData.posts.splice(index, 1);
+                saveData();
+                renderContent();
+                renderPostEditors();
+                showToast('Post deleted');
+            }
+        }
+
+        function addNewAchievement() {
+            const newAchievement = {
+                id: `achievement-${Date.now()}`,
+                title: 'New Achievement',
+                summary: 'Achievement summary...',
+                content: {
+                    title: 'New Achievement',
+                    meta: 'Category • Date',
+                    body: [
+                        {type: 'paragraph', content: 'Describe your achievement here...'}
+                    ]
+                },
+                images: []
+            };
+            
+            siteData.achievements.push(newAchievement);
+            saveData();
+            renderContent();
+            renderAchievementEditors();
+            showToast('New achievement added');
+        }
+
+        function addNewPost() {
+            const newPost = {
+                id: `post-${Date.now()}`,
+                title: 'New Blog Post',
+                date: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+                summary: 'Post summary...',
+                content: {
+                    title: 'New Blog Post',
+                    meta: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) + ' • 5 min read',
+                    body: [
+                        {type: 'paragraph', content: 'Start writing your post here...'}
+                    ]
+                },
+                images: []
+            };
+            
+            siteData.posts.push(newPost);
+            saveData();
+            renderContent();
+            renderPostEditors();
+            showToast('New post added');
+        }
+
+        // Settings functions
+        function changeAdminPassword() {
+            const newPassword = document.getElementById('edit-admin-password').value;
+            const confirmPassword = document.getElementById('confirm-admin-password').value;
+            
+            if (!newPassword) {
+                showToast('Please enter a new password', 'error');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                showToast('Password must be at least 6 characters long', 'error');
+                return;
+            }
+            
+            ADMIN_PASSWORD = newPassword;
+            localStorage.setItem('adminPassword', newPassword);
+            
+            // Clear the input fields
+            document.getElementById('edit-admin-password').value = '';
+            document.getElementById('confirm-admin-password').value = '';
+            
+            showToast('Password changed successfully!');
+        }
+
+        function toggleAdminButtonVisibility() {
+            const hide = document.getElementById('hide-admin-button').checked;
+            localStorage.setItem('hideAdminButton', hide.toString());
+            
+            const adminButton = document.querySelector('.admin-button');
+            if (adminButton) {
+                adminButton.style.display = hide ? 'none' : 'inline';
+            }
+            
+            if (hide) {
+                showToast('Admin button hidden. Access via console: showAdminLogin()');
+            } else {
+                showToast('Admin button is now visible');
+            }
+        }
+
+        function exportData() {
+            const exportData = {
+                siteData: siteData,
+                timestamp: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `portfolio-backup-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showToast('Data exported successfully!');
+        }
+
+        function showImportData() {
+            document.getElementById('import-section').style.display = 'block';
+        }
+
+        function hideImportData() {
+            document.getElementById('import-section').style.display = 'none';
+            document.getElementById('import-data').value = '';
+        }
+
+        async function importData() {
+            const importText = document.getElementById('import-data').value.trim();
+            
+            if (!importText) {
+                showToast('Please paste data to import', 'error');
+                return;
+            }
+            
+            try {
+                const importedData = JSON.parse(importText);
+                
+                if (importedData.siteData) {
+                    siteData = importedData.siteData;
+                    saveData();
+                    await loadAdminData();
+                    renderContent();
+                    hideImportData();
+                    showToast('Data imported successfully!');
+                } else {
+                    showToast('Invalid data format', 'error');
+                }
+            } catch (error) {
+                showToast('Invalid JSON format', 'error');
+            }
+        }
+
+        async function clearAllData() {
+            if (confirm('Are you sure you want to delete ALL data? This cannot be undone!')) {
+                if (confirm('This will delete all posts, achievements, and images. Type "DELETE" in the next prompt to confirm.')) {
+                    const confirmation = prompt('Type "DELETE" to confirm:');
+                    if (confirmation === 'DELETE') {
+                        // Clear localStorage
+                        localStorage.removeItem('portfolioData');
+                        
+                        // Clear IndexedDB
+                        try {
+                            const imageIds = await getAllImageIds();
+                            for (const id of imageIds) {
+                                await deleteImageFromDB(id);
+                            }
+                        } catch (error) {
+                            console.error('Error clearing images:', error);
+                        }
+                        
+                        // Reset to default data
+                        location.reload();
+                    }
+                }
+            }
+        }
+
+        // Three.js setup
+        if (typeof THREE === 'undefined') {
+            console.error('Three.js failed to load');
+        } else {
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('canvas'), 
+                antialias: true, 
+                alpha: true 
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(10, 10, 5);
+            scene.add(directionalLight);
+
+            // Create gradient texture for toon material
+            const colors = new Uint8Array(5);
+            for (let c = 0; c <= 4; c++) {
+                colors[c] = Math.floor((c / 4) * 256);
+            }
+            const gradientTexture = new THREE.DataTexture(colors, colors.length, 1, THREE.RedFormat);
+            gradientTexture.needsUpdate = true;
+            gradientTexture.magFilter = THREE.NearestFilter;
+
+            // Create a stable star field
+            const starsCount = 200;
+            const starsPositions = new Float32Array(starsCount * 3);
+
+            // Generate fixed star positions
+            for(let i = 0; i < starsCount; i++) {
+                starsPositions[i * 3] = (Math.random() - 0.5) * 20;     // x
+                starsPositions[i * 3 + 1] = (Math.random() - 0.5) * 20; // y
+                starsPositions[i * 3 + 2] = (Math.random() - 0.5) * 20; // z
+            }
+
+            const starsGeometry = new THREE.BufferGeometry();
+            starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+
+            const starsMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                sizeAttenuation: false,
+                size: 2,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const stars = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(stars);
+            
+            // Camera setup
+            camera.position.z = 5;
+
+            // Scroll
+            let scrollY = window.scrollY;
+            let currentSection = 0;
+
+            window.addEventListener('scroll', () => {
+                scrollY = window.scrollY;
+                const newSection = Math.round(scrollY / window.innerHeight);
+                
+                if (newSection !== currentSection) {
+                    currentSection = newSection;
+                }
+            });
+
+            // Mouse movement for parallax
+            const cursor = { x: 0, y: 0 };
+            
+            window.addEventListener('mousemove', (event) => {
+                cursor.x = event.clientX / window.innerWidth - 0.5;
+                cursor.y = event.clientY / window.innerHeight - 0.5;
+            });
+
+            // Animation
+            const clock = new THREE.Clock();
+            let previousTime = 0;
+
+            const animate = () => {
+                const elapsedTime = clock.getElapsedTime();
+                const deltaTime = elapsedTime - previousTime;
+                previousTime = elapsedTime;
+
+                // Smooth camera movement based on scroll
+                const targetY = -scrollY / window.innerHeight * 4;
+                camera.position.y += (targetY - camera.position.y) * 2 * deltaTime;
+
+                // Smooth parallax effect
+                const parallaxX = cursor.x * 0.3;
+                const parallaxY = -cursor.y * 0.3;
+                
+                camera.position.x += (parallaxX - camera.position.x) * 3 * deltaTime;
+                camera.position.z = 5 + parallaxY * 0.5;
+
+                // Very subtle star movement
+                stars.rotation.y = elapsedTime * 0.005;
+
+                // Render
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            };
+
+            animate();
+
+            // Resize handler
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            });
+        }
+
+        // Custom cursor
+        const cursorDot = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        window.addEventListener('mousemove', (e) => {
+            if (cursorDot && cursorFollower) {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        function observeElements() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.achievement, .post').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            initializeApp();
+        });
+    </script>
 </body>
 </html>
