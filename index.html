@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Jhalani - Portfolio</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
+        section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 4rem 2rem; }
+        .container { max-width: 800px; width: 100%; }
+        h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 300; margin-bottom: 1rem; }
+        h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 300; margin-bottom: 1rem; }
+        .tagline { font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: #888; margin-bottom: 2rem; }
+        .bio { font-size: 1.1rem; line-height: 1.8; color: #ccc; max-width: 600px; margin-bottom: 2rem; }
+        .achievement, .post { margin-bottom: 3rem; cursor: pointer; transition: transform 0.3s; }
+        .achievement:hover, .post:hover { transform: translateX(10px); }
+        .achievement h3, .post h3 { font-size: 1.5rem; font-weight: 400; margin-bottom: 0.5rem; }
+        .post h3 { font-size: 2rem; font-weight: 300; }
+        .achievement p, .post p { color: #aaa; line-height: 1.6; }
+        .post .date { color: #666; font-size: 0.9rem; margin-bottom: 1rem; }
+        .footer { text-align: center; padding: 3rem 2rem; color: #444; font-size: 0.85rem; }
+        @media (max-width: 768px) { .achievement:hover, .post:hover { transform: none; } }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <h1>hey, i'm aditya</h1>
+            <p class="tagline">student, musician, and ai enthusiast :)</p>
+            <p class="bio">I'm a high school student at Trinity School with a passion for AI, music, and technology. Currently exploring machine learning, programming, and the future of artificial intelligence while maintaining a 4.0 GPA and leading jazz performances.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>achievements</h2>
+            <div class="achievement">
+                <h3>Lead Alto Saxophonist & Gold Medalist</h3>
+                <p>Lead Alto Saxophonist for Trinity School Jazz Band with 6+ years of experience. Gold Medalist at WorldStrides Competition, performing at inter-school competitions and weekly jazz club sessions.</p>
+            </div>
+            <div class="achievement">
+                <h3>Honor Council Board Member</h3>
+                <p>Elected to Trinity School's selective Honor Council Board (8 students chosen by student body), serving on the School Disciplinary Council to uphold academic honesty and ensure restorative justice.</p>
+            </div>
+            <div class="achievement">
+                <h3>Multi-Instrumentalist & Academic Excellence</h3>
+                <p>Maintaining a 4.0 unweighted GPA while mastering multiple instruments: 12+ years piano, 6+ years saxophone, 2 years violin, and 1 year flute. Active in basketball, environmental advocacy, and financial literacy.</p>
+            </div>
+            <div class="achievement">
+                <h3>AI & Programming Enthusiast</h3>
+                <p>Proficient in Python, CSS, HTML, and Java. Experienced with AI models including ChatGPT, Gemini, ElevenLabs, and Claude. Completed Advanced Macroeconomics at Johns Hopkins CTY summer program.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>thoughts on ai & the future</h2>
+            <div class="post">
+                <h3>AI in Education: A Student's Perspective</h3>
+                <p class="date">January 2025</p>
+                <p>As a high school student working with AI models like Claude, ChatGPT, and Gemini, I'm fascinated by how these tools are reshaping learning...</p>
+            </div>
+            <div class="post">
+                <h3>The Intersection of Music and Machine Learning</h3>
+                <p class="date">December 2024</p>
+                <p>Playing jazz for over 6 years has taught me about improvisation, pattern recognition, and creative expression—skills surprisingly relevant to AI development...</p>
+            </div>
+            <div class="post">
+                <h3>Building Tomorrow: Teen Perspective on AI Ethics</h3>
+                <p class="date">November 2024</p>
+                <p>As someone who will inherit the world these AI systems are building, I think about the ethical implications constantly...</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div>© 2025 Aditya Jhalani</div>
+    </footer>
+</body>
+</html>
