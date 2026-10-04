@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jazz Solo Generator — Aditya Jhalani</title>
+  <meta name="description" content="JazzML is an ongoing machine-learning and music research project using the Weimar Jazz Database." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <header class="nav">
+    <a class="nav-brand" href="../index.html">
+      <span class="mark">AJ</span>
+      <span data-scramble>Aditya Jhalani</span>
+    </a>
+    <nav class="nav-links">
+      <a class="btn ghost" href="../index.html#projects" data-scramble-hover>[ PROJECTS ]</a>
+      <a class="btn ghost" href="../index.html#about" data-scramble-hover>[ ABOUT ]</a>
+      <a class="btn" href="../assets/Aditya-Jhalani-Resume.pdf" data-scramble-hover>[ RESUME ]</a>
+      <a class="nav-contact" href="mailto:adityajhalani43@gmail.com" aria-label="Email Aditya">&#9993;</a>
+    </nav>
+  </header>
+
+  <section class="case-hero">
+    <span class="num">CASE STUDY / 01</span>
+    <h1 data-scramble>JazzML / Jazz Solo Generator</h1>
+    <div class="kicker">ONGOING ML/MUSIC RESEARCH — EVALUATION FIRST</div>
+  </section>
+
+  <div class="case-meta">
+    <div class="strip-item"><span class="k">Role</span><span class="v">Research, implementation, evaluation</span></div>
+    <div class="strip-item"><span class="k">Stack</span><span class="v">PyTorch · MIDI · Music21</span></div>
+    <div class="strip-item"><span class="k">Data</span><span class="v">Weimar Jazz Database</span></div>
+    <div class="strip-item"><span class="k">Status</span><span class="v blue">Active research — no promoted model</span></div>
+  </div>
+
+  <main class="case-body">
+    <section class="reveal">
+      <h2>The problem</h2>
+      <p>I wanted a research workflow that could test jazz rhythm and melody ideas against the same data and listening standards. The project uses the Weimar Jazz Database and treats a runnable baseline, controlled comparisons, and careful records as more useful than a single impressive clip.</p>
+    </section>
+
+    <section class="reveal">
+      <h2>What I built</h2>
+      <p>I direct AI-agent-assisted experiments on jazz rhythm and melody using the Weimar Jazz Database. The workflow includes PyTorch models, train-only data handling, multi-seed metrics, protected evaluation panels, provenance checks, and a deterministic melodic carrier for a limited retrieval/template baseline.</p>
+      <ul>
+        <li>Multi-seed comparisons and protected evaluation panels to reduce accidental promotion of a lucky run</li>
+        <li>Train-only retrieval/template experiments with a deterministic melodic carrier for a runnable baseline</li>
+        <li>Provenance and reproducibility checks that keep data, code, and evaluation context attached to each run</li>
+        <li>Listening gates alongside structured metrics before a model or version is described as better</li>
+      </ul>
+    </section>
+
+    <section class="reveal">
+      <h2>The part most people skip: evaluation</h2>
+      <p>I use structured metrics and listening gates together. Runs that failed the predeclared density or rhythm-distribution criteria stayed rejected; a lower loss or a code change is not enough to call a model better.</p>
+    </section>
+
+    <section class="reveal">
+      <h2>Research boundaries</h2>
+      <ul>
+        <li>The current baseline is limited and remains unpromoted until its declared rhythm and density criteria are met</li>
+        <li>Model comparisons stay tied to a provenance record, reproducibility checks, and a protected evaluation panel</li>
+        <li>Listening remains part of the gate; metrics alone do not establish that a musical result is better</li>
+      </ul>
+    </section>
+
+    <section class="reveal">
+      <h2>Current state</h2>
+      <p>The current public-facing baseline is a limited train-only retrieval/template rhythm system with a deterministic melodic carrier. It is a runnable research baseline, not a promoted generative model.</p>
+      <div class="audio-list" style="margin-top:24px">
+        <div class="audio-row">
+          <div class="meta"><span class="t">Autumn Leaves</span><span class="s">Archived v6.8 example — full chorus + rhythm section</span></div>
+          <audio controls preload="none" src="../assets/audio/autumn_leaves.m4a"></audio>
+        </div>
+        <div class="audio-row">
+          <div class="meta"><span class="t">Blues in F</span><span class="s">Archived v6.8 example — 12-bar blues + rhythm section</span></div>
+          <audio controls preload="none" src="../assets/audio/blues_F.m4a"></audio>
+        </div>
+        <div class="audio-row">
+          <div class="meta"><span class="t">ii–V–I in C</span><span class="s">Archived v6.8 example — progression study</span></div>
+          <audio controls preload="none" src="../assets/audio/ii_V_I_C.m4a"></audio>
+        </div>
+      </div>
+      <p class="audio-note">ARCHIVED LISTENING EXAMPLES: EARLIER v6.8 EXPERIMENTS. THESE FILES ARE NOT PRESENTED AS THE CURRENT BEST MODEL OR A PROMOTED RELEASE.</p>
+    </section>
+  </main>
+
+  <div class="case-next">
+    <span class="hint">BACK TO PROJECTS</span>
+    <a class="big" href="../index.html#projects" data-scramble-hover>All projects →</a>
+  </div>
+
+  <footer id="contact">
+    <div class="footer-grid">
+      <div class="footer-id">
+        <div class="brand"><span class="mark">AJ</span><span>Aditya Jhalani</span></div>
+        <p>High school builder in NYC working across ML, voice, teaching, and accessibility.</p>
+        <a class="btn blue" href="mailto:adityajhalani43@gmail.com" data-scramble-hover>[ GET IN TOUCH ]</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Pages</div>
+        <a href="../index.html" data-scramble-hover>Home</a>
+        <a href="../index.html#about" data-scramble-hover>About</a>
+        <a href="../index.html#projects" data-scramble-hover>Projects</a>
+        <a href="../assets/Aditya-Jhalani-Resume.pdf" data-scramble-hover>Resume</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Connect</div>
+        <a href="https://github.com/aditya123123123123" target="_blank" rel="noopener" data-scramble-hover>GitHub</a>
+        <a href="https://www.linkedin.com/in/aditya-jhalani-70b207367" target="_blank" rel="noopener" data-scramble-hover>LinkedIn</a>
+        <a href="https://www.instagram.com/aj.jhalani" target="_blank" rel="noopener" data-scramble-hover>Instagram</a>
+        <a href="mailto:adityajhalani43@gmail.com" data-scramble-hover>Email</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 ADITYA JHALANI</span>
+      <span>NEW YORK CITY — UPDATED SEPTEMBER 2026</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

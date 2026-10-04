@@ -1,10 +1,182 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,nofollow,noarchive">
-  <title></title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Jhalani — AI, jazz, and teaching</title>
+  <meta name="description" content="Aditya Jhalani works on machine learning, voice interfaces, accessible technology, jazz research, and AI literacy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body></body>
+<body>
+
+  <!-- cobalt intro field -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-mark">AJ</div>
+    <div class="intro-name" data-scramble>Aditya Jhalani</div>
+    <div class="intro-tick" id="introTick">BOOT // 00</div>
+  </div>
+
+  <!-- nav -->
+  <header class="nav">
+    <a class="nav-brand" href="index.html">
+      <span class="mark">AJ</span>
+      <span data-scramble>Aditya Jhalani</span>
+    </a>
+    <nav class="nav-links">
+      <a class="btn ghost" href="#projects" data-scramble-hover>[ PROJECTS ]</a>
+      <a class="btn ghost" href="#about" data-scramble-hover>[ ABOUT ]</a>
+      <a class="btn" href="assets/Aditya-Jhalani-Resume.pdf" data-scramble-hover>[ RESUME ]</a>
+      <a class="nav-contact" href="mailto:adityajhalani43@gmail.com" aria-label="Email Aditya">&#9993;</a>
+    </nav>
+  </header>
+
+  <!-- collage marquee: two counter-scrolling rows of photos -->
+  <section class="collage" aria-label="Life in photos">
+    <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" hidden>Pause photos</button>
+    <div class="marquee rtl" id="rowA"></div>
+    <div class="marquee ltr" id="rowB"></div>
+    <noscript>
+      <div class="noscript-photo">
+        <img src="assets/photos/sax-stage.jpg" alt="Aditya playing alto saxophone with the Trinity Jazz Ensemble." width="1182" height="664" />
+        <span>LEAD ALTO — TRINITY JAZZ ENSEMBLE</span>
+      </div>
+    </noscript>
+  </section>
+
+  <!-- hero -->
+  <section class="hero">
+    <h1 class="reveal">I'm Aditya. I work on <span class="blue">AI</span>, play jazz, and teach.</h1>
+    <div class="hero-sub reveal" data-scramble>NEW YORK CITY · TRINITY '28</div>
+  </section>
+
+  <!-- status strip -->
+  <div class="strip reveal">
+    <div class="strip-item"><span class="k">School</span><span class="v">Trinity '28</span></div>
+    <div class="strip-item"><span class="k">Now</span><span class="v">ML research · accessible technology</span></div>
+    <div class="strip-item"><span class="k">Recently</span><span class="v blue">Teaching · CloudExtel internship</span></div>
+    <div class="strip-item"><span class="k">Updated</span><span class="v">September 7, 2026</span></div>
+  </div>
+
+  <!-- about black band -->
+  <section class="about" id="about">
+    <div class="label" data-scramble>ABOUT</div>
+    <p class="reveal">I'm an 11th grader at Trinity School in New York. I direct AI-agent-assisted research on jazz generation, and I play lead alto sax in our Jazz Ensemble and Jazz Messengers. The research is still in progress: I compare models and simpler baselines, listen to the results, and keep track of what doesn't work.</p>
+    <p class="reveal">This summer I taught responsible AI with Breakthrough New York and worked on business systems during my CloudExtel internship. I'm also contributing to Audemy's accessible audio-gaming work. Outside that, I co-lead Trinity's Sol Tutors chapter and serve on the Honor Council.</p>
+  </section>
+
+  <!-- projects -->
+  <div class="projects-head" id="projects">
+    <h2 class="reveal" data-scramble>Projects</h2>
+    <span class="count">01 SELECTED / 2026</span>
+  </div>
+
+  <!-- 01 jazz -->
+  <article class="project">
+    <div class="project-media reveal" data-viz="jazz">
+      <span class="media-tag">CONCEPTUAL ILLUSTRATION // MIDI</span>
+      <canvas aria-hidden="true"></canvas>
+    </div>
+    <div class="project-info">
+      <span class="num reveal">/ 01</span>
+      <h3 class="reveal" data-scramble>Jazz Solo Generator</h3>
+      <span class="kicker reveal">ONGOING ML RESEARCH</span>
+      <p class="desc reveal">I direct AI-agent-assisted experiments on jazz rhythm and melody using the Weimar Jazz Database. Recent work compares PyTorch models with a train-only retrieval baseline, using controlled evaluation and listening before anything is promoted.</p>
+      <div class="stack reveal">
+        <span>PyTorch</span><span>Evaluation</span><span>MIDI</span><span>Weimar Jazz DB</span><span>Provenance</span>
+      </div>
+      <figure class="project-context-photo reveal">
+        <img src="assets/photos/sax-stage.jpg" alt="Aditya playing alto saxophone with the Trinity Jazz Ensemble." width="1182" height="664" loading="lazy" decoding="async" />
+        <figcaption>PERSONAL CONTEXT // LEAD ALTO</figcaption>
+      </figure>
+      <a class="btn reveal" href="project/jazz-solo-generator.html" data-scramble-hover>[ CASE STUDY ]</a>
+    </div>
+  </article>
+
+  <!-- recent work -->
+  <section class="recent-work" id="recent">
+    <div class="projects-head">
+      <h2 class="reveal" data-scramble>Recent work</h2>
+      <span class="count">SUMMER 2026</span>
+    </div>
+    <div class="recent-grid">
+      <article class="recent-card reveal">
+        <span class="off-num">/ 01 · INTERNSHIP</span>
+        <h3>CloudExtel</h3>
+        <p>Draft and pilot work on business systems, workflow automation, and partner-performance evaluation. It wasn't a completed company-wide production rollout.</p>
+      </article>
+      <article class="recent-card reveal">
+        <span class="off-num">/ 02 · CONTRIBUTOR</span>
+        <h3>Audemy</h3>
+        <p>Contributing to the website and support work for Audemy's audio games for blind and low-vision players. Recent work includes the ElevenLabs Impact Program website credit, approved and merged into preproduction, with the live release still pending.</p>
+        <a class="text-link" href="https://audemy.org/" target="_blank" rel="noopener">Visit Audemy →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- beyond the code -->
+  <section class="offstage" id="beyond">
+    <div class="projects-head">
+      <h2 class="reveal" data-scramble>Beyond the code</h2>
+      <span class="count">THE REST OF ME</span>
+    </div>
+    <div class="off-grid">
+      <div class="off-card reveal">
+        <span class="off-num">/ A</span>
+        <h3>Alto saxophone</h3>
+        <p>Lead alto in Trinity's Jazz Ensemble and Jazz Messengers. WorldStrides Music Competition gold medalist. The jazz ML project exists because I play this music — I judge the model's solos the same way I judge my own.</p>
+      </div>
+      <div class="off-card reveal">
+        <span class="off-num">/ B</span>
+        <h3>Teaching</h3>
+        <p>In July and August, I designed a four-week, eight-session responsible-AI curriculum for incoming ninth graders at Breakthrough New York and taught program sessions. We covered how AI works, bias, evaluation, privacy, and responsible use. I also co-founded and co-lead Trinity's Sol Tutors chapter.</p>
+      </div>
+      <div class="off-card reveal">
+        <span class="off-num">/ C</span>
+        <h3>Markets &amp; judgment</h3>
+        <p>I lead Trinity's Investment Club — markets, risk, and how macro policy collides with technology. And I sit on the Honor Council, where the job is listening carefully and reasoning precisely when it actually matters.</p>
+      </div>
+      <div class="off-card reveal">
+        <span class="off-num">/ D</span>
+        <h3>Writing</h3>
+        <p>Regional Scholastic Art &amp; Writing Awards Gold Key recipient. Clear writing and clear thinking are the same skill — it shows up in every case study on this site.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer id="contact">
+    <div class="footer-grid">
+      <div class="footer-id">
+        <div class="brand"><span class="mark">AJ</span><span data-scramble>Aditya Jhalani</span></div>
+        <p>High school builder in NYC working across ML, voice, teaching, and accessibility.</p>
+        <a class="btn blue" href="mailto:adityajhalani43@gmail.com" data-scramble-hover>[ GET IN TOUCH ]</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Pages</div>
+        <a href="index.html" data-scramble-hover>Home</a>
+        <a href="#about" data-scramble-hover>About</a>
+        <a href="#projects" data-scramble-hover>Projects</a>
+        <a href="#recent" data-scramble-hover>Recent work</a>
+        <a href="#beyond" data-scramble-hover>Beyond the code</a>
+        <a href="assets/Aditya-Jhalani-Resume.pdf" data-scramble-hover>Resume</a>
+      </div>
+      <div class="footer-col">
+        <div class="head">Connect</div>
+        <a href="https://github.com/aditya123123123123" target="_blank" rel="noopener" data-scramble-hover>GitHub</a>
+        <a href="https://www.linkedin.com/in/aditya-jhalani-70b207367" target="_blank" rel="noopener" data-scramble-hover>LinkedIn</a>
+        <a href="https://www.instagram.com/aj.jhalani" target="_blank" rel="noopener" data-scramble-hover>Instagram</a>
+        <a href="mailto:adityajhalani43@gmail.com" data-scramble-hover>Email</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 ADITYA JHALANI</span>
+      <span>NEW YORK CITY — UPDATED SEPTEMBER 2026</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
 </html>
