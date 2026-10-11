@@ -372,6 +372,16 @@ html.js .noscript-photo { display: none; }
 
 .tile canvas { position: absolute; inset: 36px 0 0 0; width: 100%; height: calc(100% - 36px); }
 
+/* Learning approach diagram: same cobalt, type and rules as the original site. */
+.project-media.learning-media { background: var(--blue); color: var(--paper); aspect-ratio: auto; }
+.learning-score { width: 100%; padding: 82px clamp(24px, 5vw, 72px) 44px; }
+.learning-heading { font-size: clamp(34px, 4vw, 60px); font-weight: 500; line-height: 1.08; letter-spacing: -0.035em; margin-bottom: 36px; }
+.learning-score ol { list-style: none; padding: 0; margin: 0; }
+.learning-score li { display: flex; gap: 22px; padding: 19px 0; border-top: 1px solid rgba(255,255,255,.35); font-size: 24px; }
+.learning-score li > span { padding-top: 6px; font: 12px var(--font-mono); }
+.learning-score small { display: block; font-size: 14px; line-height: 1.5; margin-top: 5px; }
+.learning-foot { font: 11px/1.7 var(--font-mono); letter-spacing: .08em; margin-top: 30px; }
+
 /* ---------- hero ---------- */
 
 .hero {
@@ -543,10 +553,10 @@ html.js .noscript-photo { display: none; }
 
 .project-info .kicker {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gray-light);
+  color: var(--gray);
   display: block;
   margin-bottom: 22px;
 }
@@ -954,6 +964,10 @@ html.js .reveal.in,
 }
 
 /* ---------- reduced motion ---------- */
+
+@media (max-width: 400px) {
+  .nav-links .btn { white-space: nowrap; padding-inline: 10px; font-size: 10px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

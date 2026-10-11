@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aditya Jhalani — AI, jazz, and teaching</title>
-  <meta name="description" content="Aditya Jhalani works on machine learning, voice interfaces, accessible technology, jazz research, and AI literacy." />
+  <meta name="description" content="Aditya Jhalani is a Trinity School student in New York, Class of 2028. AI literacy, jazz-generation research, alto saxophone, teaching, and student leadership." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pet.css?v=roam-1" />
 </head>
 <body>
 
@@ -55,63 +56,97 @@
   <!-- status strip -->
   <div class="strip reveal">
     <div class="strip-item"><span class="k">School</span><span class="v">Trinity '28</span></div>
-    <div class="strip-item"><span class="k">Now</span><span class="v">ML research · accessible technology</span></div>
-    <div class="strip-item"><span class="k">Recently</span><span class="v blue">Teaching · CloudExtel internship</span></div>
-    <div class="strip-item"><span class="k">Updated</span><span class="v">September 7, 2026</span></div>
+    <div class="strip-item"><span class="k">Building</span><span class="v blue">Machine Literate</span></div>
+    <div class="strip-item"><span class="k">Researching</span><span class="v">Jazz rhythm &amp; melody</span></div>
+    <div class="strip-item"><span class="k">Updated</span><span class="v">October 10, 2026</span></div>
   </div>
 
   <!-- about black band -->
   <section class="about" id="about">
     <div class="label" data-scramble>ABOUT</div>
-    <p class="reveal">I'm an 11th grader at Trinity School in New York. I direct AI-agent-assisted research on jazz generation, and I play lead alto sax in our Jazz Ensemble and Jazz Messengers. The research is still in progress: I compare models and simpler baselines, listen to the results, and keep track of what doesn't work.</p>
-    <p class="reveal">This summer I taught responsible AI with Breakthrough New York and worked on business systems during my CloudExtel internship. I'm also contributing to Audemy's accessible audio-gaming work. Outside that, I co-lead Trinity's Sol Tutors chapter and serve on the Honor Council.</p>
+    <p class="reveal">I'm a student at Trinity School in New York, Class of 2028. I play lead alto sax in Trinity's Jazz Ensemble and Jazz Messengers. I'm working on JazzML, a jazz solo generator, and Machine Literate, a site for learning about AI through experiments.</p>
+    <p class="reveal">At Trinity, I lead the Investment Club, South Asian Affinity group (SAA), and Honor Council. Outside school, I teach AI literacy.</p>
   </section>
 
   <!-- projects -->
   <div class="projects-head" id="projects">
     <h2 class="reveal" data-scramble>Projects</h2>
-    <span class="count">01 SELECTED / 2026</span>
+    <span class="count">02 SELECTED / 2026</span>
   </div>
 
-  <!-- 01 jazz -->
+  <!-- 01 AI literacy -->
+  <article class="project">
+    <div class="project-media learning-media reveal">
+      <span class="media-tag">MACHINE LITERATE // LEARNING APPROACH</span>
+      <div class="learning-score">
+        <p class="learning-heading">Try it.<br>Then explain it.</p>
+        <ol>
+          <li><span>01</span><div>Predict<small>Make a claim. Give a reason.</small></div></li>
+          <li><span>02</span><div>Experiment<small>Change something. Observe.</small></div></li>
+          <li><span>03</span><div>Revise<small>Use the evidence. Try again.</small></div></li>
+        </ol>
+        <p class="learning-foot">GRADES 5–8 / 9–12 · IN DEVELOPMENT</p>
+      </div>
+    </div>
+    <div class="project-info">
+      <span class="num reveal">/ 01</span>
+      <h3 class="reveal" data-scramble>Machine Literate</h3>
+      <span class="kicker reveal">AI LITERACY · IN DEVELOPMENT</span>
+      <p class="desc reveal">I'm building a site where students learn about AI by making predictions and testing them. It has separate courses for grades 5–8 and 9–12, with 12 lessons each. I use AI agents to help build and test it. I haven't launched it yet.</p>
+      <div class="stack reveal"><span>Curriculum</span><span>Interactive experiments</span><span>Teacher guides</span></div>
+      <a class="btn reveal" href="project/machine-literate.html" data-scramble-hover>[ PROJECT NOTES ]</a>
+    </div>
+  </article>
+
+  <!-- 02 jazz -->
   <article class="project">
     <div class="project-media reveal" data-viz="jazz">
       <span class="media-tag">CONCEPTUAL ILLUSTRATION // MIDI</span>
       <canvas aria-hidden="true"></canvas>
     </div>
     <div class="project-info">
-      <span class="num reveal">/ 01</span>
-      <h3 class="reveal" data-scramble>Jazz Solo Generator</h3>
+      <span class="num reveal">/ 02</span>
+      <h3 class="reveal" data-scramble>JazzML</h3>
       <span class="kicker reveal">ONGOING ML RESEARCH</span>
-      <p class="desc reveal">I direct AI-agent-assisted experiments on jazz rhythm and melody using the Weimar Jazz Database. Recent work compares PyTorch models with a train-only retrieval baseline, using controlled evaluation and listening before anything is promoted.</p>
+      <p class="desc reveal">I'm experimenting with models that generate jazz solos using the Weimar Jazz Database. I use AI agents to help with the code and tests, and listen to the results myself. Right now, I'm working on rhythm and how the notes fit the chord changes. The audio on the project page is from an older version.</p>
       <div class="stack reveal">
-        <span>PyTorch</span><span>Evaluation</span><span>MIDI</span><span>Weimar Jazz DB</span><span>Provenance</span>
+        <span>PyTorch</span><span>MIDI</span><span>Weimar Jazz DB</span>
       </div>
       <figure class="project-context-photo reveal">
         <img src="assets/photos/sax-stage.jpg" alt="Aditya playing alto saxophone with the Trinity Jazz Ensemble." width="1182" height="664" loading="lazy" decoding="async" />
-        <figcaption>PERSONAL CONTEXT // LEAD ALTO</figcaption>
+        <figcaption>LEAD ALTO // TRINITY JAZZ ENSEMBLE</figcaption>
       </figure>
-      <a class="btn reveal" href="project/jazz-solo-generator.html" data-scramble-hover>[ CASE STUDY ]</a>
+      <a class="btn reveal" href="project/jazz-solo-generator.html" data-scramble-hover>[ PROJECT NOTES ]</a>
     </div>
   </article>
 
   <!-- recent work -->
   <section class="recent-work" id="recent">
     <div class="projects-head">
-      <h2 class="reveal" data-scramble>Recent work</h2>
-      <span class="count">SUMMER 2026</span>
+      <h2 class="reveal" data-scramble>Experience</h2>
+      <span class="count">TEACHING / INTERNSHIP / CONTRIBUTIONS / SHADOWING</span>
     </div>
     <div class="recent-grid">
       <article class="recent-card reveal">
-        <span class="off-num">/ 01 · INTERNSHIP</span>
-        <h3>CloudExtel</h3>
-        <p>Draft and pilot work on business systems, workflow automation, and partner-performance evaluation. It wasn't a completed company-wide production rollout.</p>
+        <span class="off-num">/ 01 · JULY–AUGUST 2026 · VOLUNTEER AI INSTRUCTOR</span>
+        <h3>Breakthrough New York</h3>
+        <p>I designed a four-week, eight-session responsible-AI curriculum for incoming ninth graders and taught sessions in the program. The lessons covered AI fundamentals, bias, evaluation, privacy, and responsible use.</p>
       </article>
       <article class="recent-card reveal">
-        <span class="off-num">/ 02 · CONTRIBUTOR</span>
+        <span class="off-num">/ 02 · SUMMER 2026 INTERNSHIP</span>
+        <h3>CloudExtel</h3>
+        <p>During my summer internship, I worked on draft business systems and an Excel workbook for evaluating partner performance. I organized KPIs, evidence, scoring, and corrective actions for sponsor discussion and pilot review, including how to handle missing data. The systems were still in the draft and pilot stages when I worked on them.</p>
+      </article>
+      <article class="recent-card reveal">
+        <span class="off-num">/ 03 · CONTRIBUTOR</span>
         <h3>Audemy</h3>
-        <p>Contributing to the website and support work for Audemy's audio games for blind and low-vision players. Recent work includes the ElevenLabs Impact Program website credit, approved and merged into preproduction, with the live release still pending.</p>
+        <p>I contributed website and support work to Audemy, which makes audio games for blind and low-vision players. My website credit for the ElevenLabs Impact Program was merged into the preproduction site. I haven't confirmed whether it's live yet.</p>
         <a class="text-link" href="https://audemy.org/" target="_blank" rel="noopener">Visit Audemy →</a>
+      </article>
+      <article class="recent-card reveal">
+        <span class="off-num">/ 04 · DECEMBER 2024 · SHADOWING</span>
+        <h3>Wayfair</h3>
+        <p>I shadowed Wayfair's Global Head of Transportation and Delivery in Houston, observing warehouse, packaging, and delivery work. I also joined customer visits to understand operational challenges.</p>
       </article>
     </div>
   </section>
@@ -126,22 +161,32 @@
       <div class="off-card reveal">
         <span class="off-num">/ A</span>
         <h3>Alto saxophone</h3>
-        <p>Lead alto in Trinity's Jazz Ensemble and Jazz Messengers. WorldStrides Music Competition gold medalist. The jazz ML project exists because I play this music — I judge the model's solos the same way I judge my own.</p>
+        <p>I play lead alto in Trinity's Jazz Ensemble and Jazz Messengers. My music awards include a WorldStrides Music Competition gold medal.</p>
       </div>
       <div class="off-card reveal">
         <span class="off-num">/ B</span>
-        <h3>Teaching</h3>
-        <p>In July and August, I designed a four-week, eight-session responsible-AI curriculum for incoming ninth graders at Breakthrough New York and taught program sessions. We covered how AI works, bias, evaluation, privacy, and responsible use. I also co-founded and co-lead Trinity's Sol Tutors chapter.</p>
+        <h3>At school</h3>
+        <p>I lead the Investment Club, South Asian Affinity group (SAA), and Honor Council. In Investment Club, we discuss markets, investing, risk, and economic events. I help organize SAA cultural programming and take part in confidential student-faculty discussions on Honor Council.</p>
       </div>
       <div class="off-card reveal">
         <span class="off-num">/ C</span>
-        <h3>Markets &amp; judgment</h3>
-        <p>I lead Trinity's Investment Club — markets, risk, and how macro policy collides with technology. And I sit on the Honor Council, where the job is listening carefully and reasoning precisely when it actually matters.</p>
+        <h3>Awards &amp; languages</h3>
+        <p>I received a Regional Scholastic Art &amp; Writing Awards Gold Key in 2025. I'm fluent in English and Hindi, and proficient in Spanish.</p>
       </div>
       <div class="off-card reveal">
         <span class="off-num">/ D</span>
-        <h3>Writing</h3>
-        <p>Regional Scholastic Art &amp; Writing Awards Gold Key recipient. Clear writing and clear thinking are the same skill — it shows up in every case study on this site.</p>
+        <h3>Education</h3>
+        <p>Trinity School, New York · Class of 2028<br>Selected coursework: Computer Science I &amp; II; Integrated Math 2 Honors.</p>
+      </div>
+      <div class="off-card reveal">
+        <span class="off-num">/ E</span>
+        <h3>Learning outside school</h3>
+        <p>I completed Advanced Macroeconomics at the Johns Hopkins Center for Talented Youth in July 2024. In July 2025, I earned a course certificate in Supervised Machine Learning: Regression and Classification from DeepLearning.AI / Stanford Online through Coursera.</p>
+      </div>
+      <div class="off-card reveal">
+        <span class="off-num">/ F</span>
+        <h3>What I work with</h3>
+        <p>I use Python, Java, HTML/CSS, PyTorch, Weights &amp; Biases, and API integration in my projects. I also work with AI agents, Excel, and Google Workspace.</p>
       </div>
     </div>
   </section>
@@ -151,7 +196,7 @@
     <div class="footer-grid">
       <div class="footer-id">
         <div class="brand"><span class="mark">AJ</span><span data-scramble>Aditya Jhalani</span></div>
-        <p>High school builder in NYC working across ML, voice, teaching, and accessibility.</p>
+        <p>I'm a student in NYC. I work on AI, play jazz, and teach.</p>
         <a class="btn blue" href="mailto:adityajhalani43@gmail.com" data-scramble-hover>[ GET IN TOUCH ]</a>
       </div>
       <div class="footer-col">
@@ -159,7 +204,7 @@
         <a href="index.html" data-scramble-hover>Home</a>
         <a href="#about" data-scramble-hover>About</a>
         <a href="#projects" data-scramble-hover>Projects</a>
-        <a href="#recent" data-scramble-hover>Recent work</a>
+        <a href="#recent" data-scramble-hover>Experience</a>
         <a href="#beyond" data-scramble-hover>Beyond the code</a>
         <a href="assets/Aditya-Jhalani-Resume.pdf" data-scramble-hover>Resume</a>
       </div>
@@ -171,12 +216,63 @@
         <a href="mailto:adityajhalani43@gmail.com" data-scramble-hover>Email</a>
       </div>
     </div>
+    <div class="pet-perch" id="petPerch" hidden>
+      <button class="pixel-pet" id="pixelPet" type="button" aria-label="Pat the pixel cat" aria-describedby="petHint" title="Pat the cat · Escape to hide" data-pose="idle">
+        <svg viewBox="0 0 32 32" width="64" height="64" aria-hidden="true" focusable="false" shape-rendering="crispEdges">
+          <g class="pet-sitting">
+          <path class="pet-ground" d="M3 29h26v1H3z"/>
+          <g class="pet-tail pet-tail-rest"><path d="M22 26h4v-2h2v-7h-2v-2h-2v3h2v5h-4z"/></g>
+          <g class="pet-tail pet-tail-wave"><path d="M22 26h4v-2h3v-9h-2v-3h-2v3h2v8h-5z"/></g>
+          <g class="pet-body">
+            <path fill="#454b59" d="M9 17h11v2h2v8h-2v2H7v-3h1v-6h1z"/>
+            <path fill="#626b7d" d="M10 21h3v6h2v2H9v-2h1zm8 1h2v5h2v2h-5v-2h1z"/>
+            <path fill="#a8b3ca" d="M9 28h5v1H9zm8 0h4v1h-4z"/>
+          </g>
+          <g class="pet-head">
+            <path fill="#626b7d" d="M6 6h3v2h8V6h3v3h1v9h-2v2H8v-2H6z"/>
+            <path fill="#454b59" d="M7 8h2v2h9V8h1v3h1v6h-2v2H9v-2H7z"/>
+            <path fill="#8b9aff" d="M7 8h1v2H7zm11 0h1v2h-1z"/>
+            <g class="pet-eyes-open" fill="#c6d7ff"><path d="M9 12h2v3H9zm7 0h2v3h-2z"/></g>
+            <g class="pet-eyes-closed" fill="#c6d7ff"><path d="M9 14h3v1H9zm6 0h3v1h-3z"/></g>
+            <g class="pet-eyes-happy" fill="#c6d7ff"><path d="M9 13h1v-1h1v1h1v1H9zm6 0h1v-1h1v1h1v1h-3z"/></g>
+            <path fill="#a8b3ca" d="M13 16h2v1h-2z"/>
+            <path fill="#1533ff" d="M9 19h10v2H9z"/>
+            <path fill="#c6d7ff" d="M13 20h2v2h-2z"/>
+          </g>
+          <path class="pet-heart" fill="#8b9aff" d="M24 5h2v1h1V5h2v3h-1v1h-1v1h-1V9h-1V8h-1z"/>
+          </g>
+          <g class="pet-walking">
+            <path fill="#626b7d" d="M8 22H5v-2H3v-3H1v-6h2v5h2v3h4z"/>
+            <g class="pet-step pet-step-0" fill="#454b59"><path d="M9 23h3v4H9v2H5v-2h3zm13 0h3v4h3v2h-5v-3h-1z"/></g>
+            <g class="pet-step pet-step-1" fill="#454b59"><path d="M9 23h3v4h2v2H9zm13 0h3v6h-5v-2h2z"/></g>
+            <g class="pet-step pet-step-2" fill="#454b59"><path d="M9 23h3v3h3v3h-4v-2H9zm13 0h3v3h-2v3h-5v-2h4z"/></g>
+            <g class="pet-step pet-step-3" fill="#454b59"><path d="M9 23h3v6H7v-2h2zm13 0h3v4h2v2h-5z"/></g>
+            <path fill="#626b7d" d="M8 17h14v-2h5v9h-3v2H9v-2H7v-5h1z"/>
+            <path fill="#454b59" d="M9 21h13v3H10v-1H9z"/>
+            <g class="pet-step pet-step-0"><path fill="#626b7d" d="M10 23h3v3h3v3h-4v-2h-2zm13 0h3v3h-2v3h-5v-2h4z"/><path fill="#a8b3ca" d="M12 28h4v1h-4zm7 0h5v1h-5z"/></g>
+            <g class="pet-step pet-step-1"><path fill="#626b7d" d="M10 23h3v6H8v-2h2zm13 0h3v4h2v2h-5z"/><path fill="#a8b3ca" d="M8 28h5v1H8zm15 0h5v1h-5z"/></g>
+            <g class="pet-step pet-step-2"><path fill="#626b7d" d="M10 23h3v4h-3v2H6v-2h3zm13 0h3v4h3v2h-5v-3h-1z"/><path fill="#a8b3ca" d="M6 28h4v1H6zm18 0h5v1h-5z"/></g>
+            <g class="pet-step pet-step-3"><path fill="#626b7d" d="M10 23h3v4h2v2h-5zm13 0h3v6h-5v-2h2z"/><path fill="#a8b3ca" d="M10 28h5v1h-5zm11 0h5v1h-5z"/></g>
+            <path fill="#626b7d" d="M18 8h3v2h5V8h3v4h1v8h-2v2h-8v-2h-2z"/>
+            <path fill="#454b59" d="M19 11h2v1h6v-1h1v8h-2v2h-5v-2h-2z"/>
+            <path fill="#8b9aff" d="M19 10h1v2h-1zm8 0h1v2h-1z"/>
+            <path fill="#c6d7ff" d="M22 14h2v3h-2zm5 0h2v3h-2z"/>
+            <path fill="#a8b3ca" d="M27 18h3v1h-3z"/>
+            <path fill="#1533ff" d="M20 21h8v2h-8z"/>
+            <path fill="#c6d7ff" d="M25 22h2v2h-2z"/>
+          </g>
+        </svg>
+      </button>
+      <span class="pet-hint" id="petHint">A wandering pixel cat. Pat with Enter or Space. Escape hides it.</span>
+      <button class="pet-toggle" id="petToggle" type="button" aria-controls="pixelPet" aria-expanded="true">Hide pet</button>
+    </div>
     <div class="footer-base">
       <span>© 2026 ADITYA JHALANI</span>
-      <span>NEW YORK CITY — UPDATED SEPTEMBER 2026</span>
+      <span>NEW YORK CITY — UPDATED OCTOBER 2026</span>
     </div>
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/pet.js?v=roam-1"></script>
 </body>
 </html>
