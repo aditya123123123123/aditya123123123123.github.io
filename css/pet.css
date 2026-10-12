@@ -10,7 +10,6 @@
 }
 .pixel-pet svg { display: block; width: 56px; height: 56px; image-rendering: pixelated; }
 .pixel-pet[data-facing="left"] svg { transform: scaleX(-1); }
-.pixel-pet[data-occluded="true"] { opacity: 0; pointer-events: none; }
 .pet-ground { fill: #424753; }
 .pet-tail { fill: #626b7d; }
 .pet-tail-wave, .pet-eyes-closed, .pet-eyes-happy, .pet-heart, .pet-walking, .pet-step { display: none; }
@@ -28,14 +27,7 @@
 .pixel-pet[data-pose="pat"] .pet-heart,
 .pixel-pet[data-pose="pat"] .pet-tail-wave { display: inline; }
 .pet-hint { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.pet-toggle {
-  position: absolute; left: 0; top: 0; min-width: 80px; height: 44px;
-  padding: 8px; margin: 0; border: 1px solid #626b7d;
-  color: #c6cbd5; background: #15171c; pointer-events: auto;
-  font: 11px/1.5 var(--font-mono); cursor: pointer; touch-action: manipulation; white-space: nowrap;
-}
 .pixel-pet:hover .pet-ground { fill: #8b9aff; }
-.pet-toggle:hover { border-color: #8b9aff; color: #fff; }
 .pet-perch button:focus-visible { outline: 2px solid #8b9aff; outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
   .pixel-pet, .pixel-pet * { animation: none !important; transition: none !important; will-change: auto; }
