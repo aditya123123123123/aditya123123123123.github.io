@@ -1,0 +1,7 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "adityajhalani.com" }], "destination": "https://www.adityajhalani.com/$1", "permanent": true }
+  ]
+}
